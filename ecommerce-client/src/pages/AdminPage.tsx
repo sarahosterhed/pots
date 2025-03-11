@@ -1,5 +1,11 @@
+import { CreateProduct } from "../components/createProduct"
+import { Products } from "../components/Products"
+
 export const AdminPage = () => {
     return (
-        <div>AdminPage</div>
+        <div>
+            <Products/>
+            <CreateProduct/>
+        </div>
     )
 }
