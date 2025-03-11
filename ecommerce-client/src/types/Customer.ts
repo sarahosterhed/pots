@@ -5,7 +5,7 @@ export type Customer = {
     email: string;
     password: string;
     phone: string;
-    street_adress: string;
+    street_address: string;
     postal_code: string;
     city: string;
     country: string;
