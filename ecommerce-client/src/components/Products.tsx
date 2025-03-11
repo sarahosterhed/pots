@@ -2,31 +2,19 @@ import { useEffect, useState } from "react";
 import { deleteProduct, fetchProducts } from "../services/productService";
 import { Product } from "../types/Product";
 import { UpdateProduct } from "./UpdateProduct";
+import { useProduct } from "../hooks/useProducts";
 
 export const Products = () => {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const { fetchProductsHandler, products, deleteProductHandler } = useProduct()
+
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    console.log("useEffect is running");
-    const getAllproducts = async () => {
-      const data = await fetchProducts();
-      console.log(data);
-      setProducts(data);
-    };
-    getAllproducts();
+    fetchProductsHandler()
   }, []);
-
-  const deleteProductHandler = async (id: number) => {
-    await deleteProduct(id);
-    const updatedProducts = products?.filter((product) => product.id !== id);
-    if (updatedProducts) {
-      setProducts(updatedProducts);
-    }
-  };
 
   const handleClick = (id: number) => {
     setUpdateProductId(id);
