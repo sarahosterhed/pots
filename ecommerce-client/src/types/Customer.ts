@@ -1,11 +1,12 @@
 export type Customer = {
+    id: number
     firstname: string;
     lastname: string;
     email: string;
     password: string;
-    phone: number;
+    phone: string;
     street_adress: string;
-    postal_code: number;
+    postal_code: string;
     city: string;
     country: string;
     created_at: string;
