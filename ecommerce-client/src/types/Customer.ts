@@ -11,3 +11,7 @@ export type Customer = {
     country: string;
     created_at: string;
 }
+
+export type CustomerCreate = Omit<Customer, "id" | "created_at">
+
+export type CustomerEdit = Omit<Customer, "id" | "created_at">
