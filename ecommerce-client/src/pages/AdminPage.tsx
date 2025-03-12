@@ -1,4 +1,4 @@
-import { CreateProduct } from "../components/createProduct"
+import { CreateProduct } from "../components/CreateProduct"
 import { Products } from "../components/Products"
 
 export const AdminPage = () => {
