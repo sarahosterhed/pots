@@ -1,8 +1,16 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { ProductCreate } from "../types/Product";
 import { useProduct } from "../hooks/useProducts";
+import { ActionType } from "../reducers/CustomerReducer";
+import { ProductContext } from "../contexts/productContext";
 
-export const CreateProduct = () => {
+interface CreateProductProps {
+  handleClose: () => void;
+}
+
+export const CreateProduct = ({handleClose}: CreateProductProps) => {
+  const { fetchProductsHandler, createProductHandler } = useProduct()
+  const { dispatch } = useContext(ProductContext)
   const [product, setProduct] = useState<ProductCreate>({
     name: "",
     description: "",
@@ -11,22 +19,24 @@ export const CreateProduct = () => {
     category: "",
     image: "",
   });
-  const { createProductHandler } = useProduct()
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      [name]: value,
-    }));
+    setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await createProductHandler(product);
+    await createProductHandler(product)
+    const updatedProducts = await fetchProductsHandler();
+    console.log(updatedProducts)
+    dispatch({
+      type: ActionType.LOADED,
+      payload: JSON.stringify(updatedProducts)
+    })
+    handleClose()
   };
+
 
   return (
     <div
@@ -49,7 +59,7 @@ export const CreateProduct = () => {
           name="name"
           placeholder="Product Name"
           onChange={handleChange}
-          value={product?.name}
+          value={product.name}
           required
           style={{
             padding: "10px",
@@ -61,7 +71,7 @@ export const CreateProduct = () => {
         <textarea
           name="description"
           placeholder="Product Description"
-          value={product?.description}
+          value={product.description}
           onChange={handleChange}
           required
           style={{
@@ -76,7 +86,7 @@ export const CreateProduct = () => {
           type="text"
           name="price"
           placeholder="Price"
-          value={product?.price}
+          value={product.price}
           onChange={handleChange}
           required
           style={{
@@ -90,7 +100,7 @@ export const CreateProduct = () => {
           type="text"
           name="stock"
           placeholder="Stock"
-          value={product?.stock}
+          value={product.stock}
           onChange={handleChange}
           required
           style={{
@@ -104,7 +114,7 @@ export const CreateProduct = () => {
           type="text"
           name="category"
           placeholder="Category"
-          value={product?.category}
+          value={product.category}
           onChange={handleChange}
           required
           style={{
@@ -118,7 +128,7 @@ export const CreateProduct = () => {
           type="text"
           name="image"
           placeholder="Image URL"
-          value={product?.image}
+          value={product.image}
           onChange={handleChange}
           required
           style={{
