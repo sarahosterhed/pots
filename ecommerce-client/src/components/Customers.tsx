@@ -3,16 +3,14 @@ import { deleteCustomer, getCustomers } from "../services/customerService"
 import { CustomerContext } from "../contexts/customerContext"
 import { ActionType, CustomerReducer } from "../reducers/CustomerReducer"
 import { EditCustomer } from "./EditCustomer"
-// import { Customer } from "../types/Customer"
 import { CreateCustomer } from "./CreateCustomer"
 
 export const Customers = () => {
     const [customers, dispatch] = useReducer(CustomerReducer, []);
-    // const [customer, setCustomer] = useState<Customer | null>(null)
+    const [editingCustomerId, setEditingCustomerId] = useState<number | null>(null);
 
     useEffect(() => {
         const getData = async () => {
-
             const customersData = await getCustomers();
             dispatch({
                 type: ActionType.LOADED,
@@ -35,18 +33,27 @@ export const Customers = () => {
         <CustomerContext.Provider value={{ customers, dispatch }}>
             <CreateCustomer />
             <section>
-                {customers.map(({ id, firstname, lastname, city }) => {
-                    return (
-                        <div key={id} className="customer-wrapper">
-                            <h3>{firstname} {lastname}</h3>
-                            <p>{city}</p>
-                            <div className="button-wrapper">
-                                <EditCustomer customerId={id} />
-                                <button onClick={() => handleDelete(id)}>Delete</button>
-                            </div>
-                        </div>
-                    )
-                })}
+                {customers.map(({ id, firstname, lastname, city }) => (
+                    <div key={id} className="customer-wrapper">
+                        {editingCustomerId === id ? (
+                            <EditCustomer customerId={id} setEditingCustomerId={setEditingCustomerId} />
+
+                        ) : (
+                            <>
+                                <h3>{firstname} {lastname}</h3>
+                                <p>{city}</p>
+                                <div className="button-wrapper">
+                                    <button onClick={() => setEditingCustomerId(id)}>Edit</button>
+                                    <button onClick={() => handleDelete(id)}>Delete</button>
+                                </div>
+                            </>
+                        )
+
+
+                        }
+                    </div>
+                )
+                )}
             </section>
         </CustomerContext.Provider>
     )

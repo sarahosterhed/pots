@@ -1,4 +1,4 @@
-import { Customer, CustomerCreate, CustomerEdit } from "../types/Customer";
+import { Customer, CustomerCreate } from "../types/Customer";
 import axios from "axios";
 const CUSTOMER_URL = "http://localhost:3000/customers/";
 
@@ -36,7 +36,7 @@ export const createCustomer = async (payload: CustomerCreate): Promise<Customer>
     }
 }
 
-export const editCustomer = async (id: number, payload: CustomerEdit) => {
+export const editCustomer = async (id: number, payload: Customer) => {
     try {
         const response = await axios.patch(CUSTOMER_URL + id, payload)
         return response.data;

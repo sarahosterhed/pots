@@ -7,7 +7,6 @@ export type Action = {
 
 export enum ActionType {
     LOADED,
-    CREATED,
     UPDATED,
     DELETED,
 }
@@ -15,6 +14,10 @@ export enum ActionType {
 export const CustomerReducer = (customers: Customer[], action: Action): Customer[] => {
     if (action.type === ActionType.LOADED) {
         return JSON.parse(action.payload).reverse();
+    }
+    if (action.type === ActionType.UPDATED) {
+        const updatedCustomer = JSON.parse(action.payload)
+        return customers.map((customer) => customer.id === updatedCustomer.id ? updatedCustomer : customer)
     }
     if (action.type === ActionType.DELETED) {
         return customers.filter((customer) => customer.id !== JSON.parse(action.payload))
