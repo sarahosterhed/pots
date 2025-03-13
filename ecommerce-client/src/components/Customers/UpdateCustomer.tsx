@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
-import { CustomerContext } from "../contexts/customerContext";
-import { Customer } from "../types/Customer";
-import { updateCustomer } from "../services/customerService";
-import { ActionType } from "../reducers/CustomerReducer";
-import { useCustomers } from "../hooks/useCustomers";
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { updateCustomer } from "../../services/customerService";
+import { Customer } from "../../types/Customer";
+
 
 
 type UpdateCustomerProps = {

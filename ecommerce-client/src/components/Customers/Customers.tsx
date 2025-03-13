@@ -1,9 +1,10 @@
 import { useEffect, useReducer, useState } from "react"
-import { CustomerContext } from "../contexts/customerContext"
-import { ActionType, CustomerReducer } from "../reducers/CustomerReducer"
-import { UpdateCustomer } from "./UpdateCustomer"
-import { CreateCustomer } from "./CreateCustomer"
-import { useCustomers } from "../hooks/useCustomers"
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { CustomerReducer, ActionType } from "../../reducers/CustomerReducer";
+import { CreateCustomer } from "./CreateCustomer";
+import { UpdateCustomer } from "./UpdateCustomer";
+
 
 export const Customers = () => {
     const { fetchCustomersHandler, deleteCustomerHandler } = useCustomers()

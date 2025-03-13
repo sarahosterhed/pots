@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
-import { CustomerCreate } from "../types/Customer"
-import { fetchCustomers } from "../services/customerService";
-import { ActionType } from "../reducers/CustomerReducer";
-import { CustomerContext } from "../contexts/customerContext";
-import { useCustomers } from "../hooks/useCustomers";
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { fetchCustomers } from "../../services/customerService";
+import { CustomerCreate } from "../../types/Customer";
+
 
 
 export const CreateCustomer = () => {
