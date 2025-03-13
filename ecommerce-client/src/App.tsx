@@ -4,9 +4,7 @@ import { router } from './Router'
 import { ProductContext } from './contexts/productContext'
 import { useReducer } from 'react';
 import { ProductReducer } from './reducers/ProductReducer';
-
 function App() {
-
   const [products, dispatch] = useReducer(ProductReducer, []);
 
   return (

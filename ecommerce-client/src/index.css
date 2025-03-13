@@ -63,6 +63,42 @@ button:focus-visible {
   margin-left: auto;
 }
 
+.products-wrapper {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-card {
+  width: 250px;
+  border: white solid 1px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+
+  h2 {
+    color: white;
+  }
+}
+
+.product-card:hover {
+  transform: scale(1.015);
+}
+
+.product-image {
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+
+.add-to-cart-button {
+  margin-top: auto;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
