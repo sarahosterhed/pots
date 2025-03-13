@@ -1,14 +1,13 @@
 import { FormEvent, useContext, useState } from "react";
-import { ProductCreate } from "../types/Product";
-import { useProduct } from "../hooks/useProducts";
-import { ActionType } from "../reducers/CustomerReducer";
-import { ProductContext } from "../contexts/productContext";
-
+import { ProductContext } from "../../contexts/productContext";
+import { useProduct } from "../../hooks/useProducts";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { ProductCreate } from "../../types/Product";
 interface CreateProductProps {
   handleClose: () => void;
 }
 
-export const CreateProduct = ({handleClose}: CreateProductProps) => {
+export const CreateProduct = ({ handleClose }: CreateProductProps) => {
   const { fetchProductsHandler, createProductHandler } = useProduct()
   const { dispatch } = useContext(ProductContext)
   const [product, setProduct] = useState<ProductCreate>({
@@ -20,7 +19,7 @@ export const CreateProduct = ({handleClose}: CreateProductProps) => {
     image: "",
   });
 
-  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
   };
@@ -40,14 +39,14 @@ export const CreateProduct = ({handleClose}: CreateProductProps) => {
 
   return (
     <div
-    style={{
-      maxWidth: "500px",
-      margin: "20px auto",
-      padding: "20px",
-      backgroundColor: "rgba(255, 255, 255, 0.05)",
-      borderRadius: "8px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    }}
+      style={{
+        maxWidth: "500px",
+        margin: "20px auto",
+        padding: "20px",
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        borderRadius: "8px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      }}
     >
       <h2>Create new product</h2>
       <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>
@@ -148,7 +147,7 @@ export const CreateProduct = ({handleClose}: CreateProductProps) => {
             fontSize: "16px",
             cursor: "pointer",
           }}
-          
+
         >
           Create Product
         </button>

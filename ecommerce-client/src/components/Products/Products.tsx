@@ -1,10 +1,10 @@
 import { useEffect, useReducer, useState } from "react";
-import { UpdateProduct } from "./UpdateProduct";
-import { useProduct } from "../hooks/useProducts";
+import { ProductContext } from "../../contexts/productContext";
+import { useProduct } from "../../hooks/useProducts";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { ProductReducer } from "../../reducers/ProductReducer";
 import { CreateProduct } from "./CreateProduct";
-import { ProductContext } from "../contexts/productContext";
-import { ProductReducer } from "../reducers/ProductReducer";
-import { ActionType } from "../reducers/CustomerReducer";
+import { UpdateProduct } from "./UpdateProduct";
 
 export const Products = () => {
   const { fetchProductsHandler, deleteProductHandler } = useProduct();

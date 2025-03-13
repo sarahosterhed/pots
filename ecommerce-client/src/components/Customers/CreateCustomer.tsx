@@ -1,11 +1,13 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
-import { CustomerCreate } from "../types/Customer"
-import { createCustomer, getCustomers } from "../services/customerService";
-import { ActionType } from "../reducers/CustomerReducer";
-import { CustomerContext } from "../contexts/customerContext";
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { fetchCustomers } from "../../services/customerService";
+import { CustomerCreate } from "../../types/Customer";
+
 
 export const CreateCustomer = () => {
-    const [showCreateCustomer, setShowCreateCustomer] = useState(false);
+    const { createCustomerHandler } = useCustomers();
     const { dispatch } = useContext(CustomerContext);
     const [newCustomer, setNewCustomer] = useState<CustomerCreate>({
         firstname: "",
@@ -18,6 +20,7 @@ export const CreateCustomer = () => {
         city: "",
         country: ""
     });
+    const [showCreateCustomer, setShowCreateCustomer] = useState(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.type === "number") {
@@ -29,8 +32,8 @@ export const CreateCustomer = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        await createCustomer(newCustomer);
-        const updatedCustomers = await getCustomers();
+        await createCustomerHandler(newCustomer);
+        const updatedCustomers = await fetchCustomers();
         dispatch({
             type: ActionType.LOADED,
             payload: JSON.stringify(updatedCustomers)

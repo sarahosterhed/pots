@@ -1,17 +1,19 @@
 import { useEffect, useReducer, useState } from "react"
-import { deleteCustomer, getCustomers } from "../services/customerService"
-import { CustomerContext } from "../contexts/customerContext"
-import { ActionType, CustomerReducer } from "../reducers/CustomerReducer"
-import { EditCustomer } from "./EditCustomer"
-import { CreateCustomer } from "./CreateCustomer"
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { CustomerReducer, ActionType } from "../../reducers/CustomerReducer";
+import { CreateCustomer } from "./CreateCustomer";
+import { UpdateCustomer } from "./UpdateCustomer";
+
 
 export const Customers = () => {
+    const { fetchCustomersHandler, deleteCustomerHandler } = useCustomers()
     const [customers, dispatch] = useReducer(CustomerReducer, []);
     const [editingCustomerId, setEditingCustomerId] = useState<number | null>(null);
 
     useEffect(() => {
         const getData = async () => {
-            const customersData = await getCustomers();
+            const customersData = await fetchCustomersHandler();
             dispatch({
                 type: ActionType.LOADED,
                 payload: JSON.stringify(customersData)
@@ -22,7 +24,7 @@ export const Customers = () => {
     })
 
     const handleDelete = async (id: number) => {
-        await deleteCustomer(id);
+        await deleteCustomerHandler(id);
         dispatch({
             type: ActionType.DELETED,
             payload: JSON.stringify(id)
@@ -36,7 +38,7 @@ export const Customers = () => {
                 {customers.map(({ id, firstname, lastname, city }) => (
                     <div key={id} className="customer-wrapper">
                         {editingCustomerId === id ? (
-                            <EditCustomer customerId={id} setEditingCustomerId={setEditingCustomerId} />
+                            <UpdateCustomer customerId={id} setEditingCustomerId={setEditingCustomerId} />
 
                         ) : (
                             <>

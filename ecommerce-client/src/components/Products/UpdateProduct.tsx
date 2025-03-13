@@ -1,8 +1,9 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { Product } from "../types/Product";
-import { useProduct } from "../hooks/useProducts";
-import { ProductContext } from "../contexts/productContext";
-import { ActionType } from "../reducers/CustomerReducer";
+import { ProductContext } from "../../contexts/productContext";
+import { useProduct } from "../../hooks/useProducts";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { Product } from "../../types/Product";
+
 
 interface UpdateProductProps {
   productId: number;
@@ -36,6 +37,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     fetchData();
   }, []);
 
+
   const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     props.setUpdateProductId(null);
@@ -44,6 +46,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+
     const { name, value } = e.target;
 
     setUpdatedProduct((prevProduct) => {
@@ -181,3 +184,4 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     </div>
   );
 };
+
