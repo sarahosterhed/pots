@@ -113,7 +113,7 @@ export const createOrder = async (req: Request, res: Response) => {
       };
     }
 
-    res.status(201).json({message: 'Product created'})
+    res.status(201).json({message: 'Order created', id: result.insertId});
   } catch(error: unknown) {
     res.status(500).json({error: logError(error)})
   }
