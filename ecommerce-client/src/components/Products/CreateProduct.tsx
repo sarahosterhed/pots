@@ -85,7 +85,7 @@ export const CreateProduct = ({ handleClose }: CreateProductProps) => {
           type="text"
           name="price"
           placeholder="Price"
-          value={product.price}
+          value={product.price === 0 ? "" : product.price}
           onChange={handleChange}
           required
           style={{
@@ -99,7 +99,7 @@ export const CreateProduct = ({ handleClose }: CreateProductProps) => {
           type="text"
           name="stock"
           placeholder="Stock"
-          value={product.stock}
+          value={product.stock === 0 ? "" : product.stock}
           onChange={handleChange}
           required
           style={{

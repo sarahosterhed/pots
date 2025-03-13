@@ -9,10 +9,9 @@ import { UpdateProduct } from "./UpdateProduct";
 export const Products = () => {
   const { fetchProductsHandler, deleteProductHandler } = useProduct();
   const [products, dispatch] = useReducer(ProductReducer, []);
-  const [updateProductId, setUpdateProductId] = useState<number>(0);
-  const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [updateProductId, setUpdateProductId] = useState<number | null>(null);
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const handleOpen = () => setOpenCreate(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -45,8 +44,8 @@ export const Products = () => {
   return (
     <ProductContext.Provider value={{ products, dispatch }}>
       <div>
-        {open ? (
-          <CreateProduct handleClose={handleClose} />
+        {openCreate ? (
+          <CreateProduct handleClose={() => setOpenCreate(false)} />
         ) : (
           <button onClick={handleCreateProduct}>Create new product</button>
         )}
@@ -64,33 +63,38 @@ export const Products = () => {
                 backgroundColor: "rgba(255, 255, 255, 0.05)",
               }}
             >
-              <section
-                style={{ display: "flex", flexDirection: "column", gap: "5px" }}
-              >
-                <p>Name: {p.name}</p>
-                <p>Description: {p.description}</p>
-                <p>Price: {p.price} SEK</p>
-                <p>Stock: {p.stock}</p>
-                <p>Category: {p.category}</p>
-                <p>Created At: {p.created_at}</p>
-                <div
-                  style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+              {updateProductId === p.id ? (
+
+                <UpdateProduct
+                  productId={p.id}
+                  setUpdateProductId={setUpdateProductId}
+                />
+              ) : (
+                <section
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "5px",
+                  }}
                 >
-                  <button onClick={() => handleDeleteProduct(p.id)}>
-                    Delete
-                  </button>
-                  {open ? (
-                    <UpdateProduct
-                      id={updateProductId}
-                      handleClose={handleClose}
-                    />
-                  ) : (
-                    <button onClick={() => handleUpdateProduct(p.id)}>
-                      Update
+                  <p>Name: {p.name}</p>
+                  <p>Description: {p.description}</p>
+                  <p>Price: {p.price} SEK</p>
+                  <p>Stock: {p.stock}</p>
+                  <p>Category: {p.category}</p>
+                  <p>Created At: {p.created_at}</p>
+                  <div
+                    style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+                  >
+                    <button onClick={() => handleDeleteProduct(p.id)}>
+                      Delete
                     </button>
-                  )}
-                </div>
-              </section>
+                    <button onClick={() => handleUpdateProduct(p.id)}>
+                      Edit
+                    </button>
+                  </div>
+                </section>
+              )}
             </article>
           ))}
         </section>

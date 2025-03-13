@@ -6,8 +6,8 @@ import { Product } from "../../types/Product";
 
 
 interface UpdateProductProps {
-  id: number;
-  handleClose: () => void;
+  productId: number;
+  setUpdateProductId: (id: number | null) => void;
 }
 
 export const UpdateProduct = (props: UpdateProductProps) => {
@@ -19,16 +19,16 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     stock: 0,
     category: "",
     image: "",
-    created_at: ""
+    created_at: "",
   });
-  const { dispatch } = useContext(ProductContext)
+  const { dispatch } = useContext(ProductContext);
   const { updateProductHandler, fetchProductByIdHandler } = useProduct();
 
   useEffect(() => {
-    if (!props.id) return;
+    if (!props.productId) return;
 
     const fetchData = async () => {
-      const data = await fetchProductByIdHandler(props.id);
+      const data = await fetchProductByIdHandler(props.productId);
       if (data) {
         setUpdatedProduct(data);
       }
@@ -37,7 +37,16 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+
+  const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    props.setUpdateProductId(null);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+
     const { name, value } = e.target;
 
     setUpdatedProduct((prevProduct) => {
@@ -46,16 +55,15 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     });
   };
 
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!updatedProduct) return;
     await updateProductHandler(updatedProduct.id, updatedProduct);
     dispatch({
       type: ActionType.UPDATED,
-      payload: JSON.stringify(updatedProduct)
-    })
-    props.handleClose();
+      payload: JSON.stringify(updatedProduct),
+    });
+    props.setUpdateProductId(null)
   };
 
   return (
@@ -82,7 +90,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           name="name"
           placeholder="Name"
           onChange={handleChange}
-          defaultValue={updatedProduct?.name}
+          value={updatedProduct?.name}
           required
           style={{
             padding: "8px",
@@ -93,7 +101,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
         <textarea
           name="description"
           placeholder="Description"
-          defaultValue={updatedProduct?.description}
+          value={updatedProduct?.description}
           onChange={handleChange}
           required
           style={{
@@ -107,7 +115,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="price"
           placeholder="Price"
-          defaultValue={updatedProduct?.price}
+          value={updatedProduct?.price}
           onChange={handleChange}
           required
           style={{
@@ -120,7 +128,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="stock"
           placeholder="Stock"
-          defaultValue={updatedProduct?.stock}
+          value={updatedProduct?.stock}
           onChange={handleChange}
           required
           style={{
@@ -133,7 +141,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="category"
           placeholder="Category"
-          defaultValue={updatedProduct?.category}
+          value={updatedProduct?.category}
           onChange={handleChange}
           required
           style={{
@@ -146,7 +154,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="image"
           placeholder="Image URL"
-          defaultValue={updatedProduct?.image}
+          value={updatedProduct?.image}
           onChange={handleChange}
           required
           style={{
@@ -155,6 +163,13 @@ export const UpdateProduct = (props: UpdateProductProps) => {
             border: "1px solid #ccc",
           }}
         />
+        <button
+          onClick={(e) => {
+            handleBackClick(e);
+          }}
+        >
+          Back
+        </button>
         <button
           type="submit"
           style={{

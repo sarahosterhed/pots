@@ -6,7 +6,6 @@ import { fetchCustomers } from "../../services/customerService";
 import { CustomerCreate } from "../../types/Customer";
 
 
-
 export const CreateCustomer = () => {
     const { createCustomerHandler } = useCustomers();
     const { dispatch } = useContext(CustomerContext);
