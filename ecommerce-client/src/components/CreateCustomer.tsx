@@ -4,7 +4,6 @@ import { createCustomer, getCustomers } from "../services/customerService";
 import { ActionType } from "../reducers/CustomerReducer";
 import { CustomerContext } from "../contexts/customerContext";
 
-
 export const CreateCustomer = () => {
     const [showCreateCustomer, setShowCreateCustomer] = useState(false);
     const { dispatch } = useContext(CustomerContext);

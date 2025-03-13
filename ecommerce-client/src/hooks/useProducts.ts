@@ -20,6 +20,7 @@ export const useProduct = () => {
       return data;
     } catch (error) {
       setError("Error fetching products");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -32,6 +33,7 @@ export const useProduct = () => {
       return data;
     } catch (error) {
       setError("Error fetching product");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -43,6 +45,7 @@ export const useProduct = () => {
       await deleteProduct(id);
     } catch (error) {
       setError("Error: Could not delete product");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +58,7 @@ export const useProduct = () => {
       return data;
     } catch (error) {
       setError("Error: Could not update product");
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -68,6 +72,7 @@ export const useProduct = () => {
       return data;
     } catch (error) {
       setError("Error: Could not create product");
+      throw error;
     } finally {
       setIsLoading(false);
     }
