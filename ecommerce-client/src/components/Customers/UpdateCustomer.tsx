@@ -1,16 +1,19 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
-import { CustomerContext } from "../contexts/customerContext";
-import { Customer } from "../types/Customer";
-import { editCustomer, getCustomer } from "../services/customerService";
-import { ActionType } from "../reducers/CustomerReducer";
+import { CustomerContext } from "../../contexts/customerContext";
+import { useCustomers } from "../../hooks/useCustomers";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { updateCustomer } from "../../services/customerService";
+import { Customer } from "../../types/Customer";
 
 
-type ShowProps = {
+
+type UpdateCustomerProps = {
     customerId: number;
     setEditingCustomerId: (id: number | null) => void;
 }
 
-export const EditCustomer = ({ customerId, setEditingCustomerId }: ShowProps) => {
+export const UpdateCustomer = ({ customerId, setEditingCustomerId }: UpdateCustomerProps) => {
+    const { fetchCustomerByIdHandler } = useCustomers()
     const { dispatch } = useContext(CustomerContext);
     const [customer, setCustomer] = useState<Customer>({
         id: 0,
@@ -28,11 +31,11 @@ export const EditCustomer = ({ customerId, setEditingCustomerId }: ShowProps) =>
 
 
     useEffect(() => {
-        const fetchCustomer = async () => {
-            const data = await getCustomer(customerId)
+        const getCustomer = async () => {
+            const data = await fetchCustomerByIdHandler(customerId)
             setCustomer(data);
         }
-        fetchCustomer();
+        getCustomer();
     }, [customerId])
 
     const handleBackClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -50,7 +53,7 @@ export const EditCustomer = ({ customerId, setEditingCustomerId }: ShowProps) =>
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        await editCustomer(customerId, customer);
+        await updateCustomer(customerId, customer);
         dispatch({
             type: ActionType.UPDATED,
             payload: JSON.stringify(customer)

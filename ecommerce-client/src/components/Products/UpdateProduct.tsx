@@ -1,8 +1,9 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { Product } from "../types/Product";
-import { useProduct } from "../hooks/useProducts";
-import { ProductContext } from "../contexts/productContext";
-import { ActionType } from "../reducers/CustomerReducer";
+import { ProductContext } from "../../contexts/productContext";
+import { useProduct } from "../../hooks/useProducts";
+import { ActionType } from "../../reducers/CustomerReducer";
+import { Product } from "../../types/Product";
+
 
 interface UpdateProductProps {
   id: number;
@@ -19,7 +20,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     category: "",
     image: "",
     created_at: ""
-});
+  });
   const { dispatch } = useContext(ProductContext)
   const { updateProductHandler, fetchProductByIdHandler } = useProduct();
 
@@ -36,9 +37,9 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => { 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    
+
     setUpdatedProduct((prevProduct) => {
       if (!prevProduct) return prevProduct;
       return { ...prevProduct, [name]: value };
@@ -168,3 +169,4 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     </div>
   );
 };
+
