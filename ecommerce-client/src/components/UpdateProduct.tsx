@@ -1,6 +1,8 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { Product } from "../types/Product";
 import { useProduct } from "../hooks/useProducts";
+import { ProductContext } from "../contexts/productContext";
+import { ActionType } from "../reducers/CustomerReducer";
 
 interface UpdateProductProps {
   id: number;
@@ -8,8 +10,17 @@ interface UpdateProductProps {
 }
 
 export const UpdateProduct = (props: UpdateProductProps) => {
-  const [updatedProduct, setUpdatedProduct] = useState<Product | null>(null);
-
+  const [updatedProduct, setUpdatedProduct] = useState<Product>({
+    id: 0,
+    name: "",
+    description: "",
+    price: 0,
+    stock: 0,
+    category: "",
+    image: "",
+    created_at: ""
+});
+  const { dispatch } = useContext(ProductContext)
   const { updateProductHandler, fetchProductByIdHandler } = useProduct();
 
   useEffect(() => {
@@ -25,20 +36,24 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     fetchData();
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => { 
     const { name, value } = e.target;
+    
     setUpdatedProduct((prevProduct) => {
       if (!prevProduct) return prevProduct;
       return { ...prevProduct, [name]: value };
     });
   };
 
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!updatedProduct) return;
     await updateProductHandler(updatedProduct.id, updatedProduct);
+    dispatch({
+      type: ActionType.UPDATED,
+      payload: JSON.stringify(updatedProduct)
+    })
     props.handleClose();
   };
 
@@ -66,7 +81,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           name="name"
           placeholder="Name"
           onChange={handleChange}
-          value={updatedProduct?.name ?? ""}
+          defaultValue={updatedProduct?.name}
           required
           style={{
             padding: "8px",
@@ -77,7 +92,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
         <textarea
           name="description"
           placeholder="Description"
-          value={updatedProduct?.description ?? ""}
+          defaultValue={updatedProduct?.description}
           onChange={handleChange}
           required
           style={{
@@ -91,7 +106,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="price"
           placeholder="Price"
-          value={updatedProduct?.price ?? ""}
+          defaultValue={updatedProduct?.price}
           onChange={handleChange}
           required
           style={{
@@ -104,7 +119,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="stock"
           placeholder="Stock"
-          value={updatedProduct?.stock ?? ""}
+          defaultValue={updatedProduct?.stock}
           onChange={handleChange}
           required
           style={{
@@ -117,7 +132,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="category"
           placeholder="Category"
-          value={updatedProduct?.category ?? ""}
+          defaultValue={updatedProduct?.category}
           onChange={handleChange}
           required
           style={{
@@ -130,7 +145,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
           type="text"
           name="image"
           placeholder="Image URL"
-          value={updatedProduct?.image ?? ""}
+          defaultValue={updatedProduct?.image}
           onChange={handleChange}
           required
           style={{

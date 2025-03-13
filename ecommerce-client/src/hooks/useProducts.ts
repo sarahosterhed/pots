@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Product, ProductCreate, ProductUpdate } from "../types/Product";
+import { ProductCreate, ProductUpdate } from "../types/Product";
 import {
   createProduct,
   deleteProduct,
@@ -9,7 +9,7 @@ import {
 } from "../services/productService";
 
 export const useProduct = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -17,7 +17,7 @@ export const useProduct = () => {
     setIsLoading(true);
     try {
       const data = await fetchProducts();
-      setProducts(data);
+      return data;
     } catch (error) {
       setError("Error fetching products");
     } finally {
@@ -29,7 +29,6 @@ export const useProduct = () => {
     setIsLoading(true);
     try {
       const data = await fetchProductById(id);
-      console.log(data);
       return data;
     } catch (error) {
       setError("Error fetching product");
@@ -42,8 +41,6 @@ export const useProduct = () => {
     setIsLoading(true);
     try {
       await deleteProduct(id);
-      const updatedProducts = products?.filter((product) => product.id !== id);
-      setProducts(updatedProducts);
     } catch (error) {
       setError("Error: Could not delete product");
     } finally {
@@ -54,10 +51,8 @@ export const useProduct = () => {
   const updateProductHandler = async (id: number, payload: ProductUpdate) => {
     setIsLoading(true);
     try {
-      await updateProduct(id, payload);
-      setProducts((prevProducts) =>
-        prevProducts.map((p) => (p.id == id ? { ...p, ...payload } : p))
-      );
+      const data = await updateProduct(id, payload);
+      return data;
     } catch (error) {
       setError("Error: Could not update product");
     } finally {
@@ -69,22 +64,22 @@ export const useProduct = () => {
   const createProductHandler = async (payload: ProductCreate) => {
     setIsLoading(true);
     try {
-      await createProduct(payload);
+      const data = await createProduct(payload);
+      return data;
     } catch (error) {
-      setError("Error: Could not delete product");
+      setError("Error: Could not create product");
     } finally {
       setIsLoading(false);
     }
   };
 
   return {
-    products,
     isLoading,
     error,
     fetchProductsHandler,
     deleteProductHandler,
     updateProductHandler,
     fetchProductByIdHandler,
-    createProductHandler
+    createProductHandler,
   };
 };
