@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import ProductCard from "./ProductCard"
-import { ProductContext } from "../contexts/productContext"
+import { ProductContext } from "../contexts/ProductContext"
 import { ActionType } from "../reducers/CustomerReducer";
 import { useProduct } from "../hooks/useProducts";
 

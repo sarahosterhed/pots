@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { ProductContext } from "../../contexts/productContext";
+import { ProductContext } from "../../contexts/ProductContext";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { CreateProduct } from "./CreateProduct";

@@ -7,12 +7,12 @@ type ShowProductCardProps = {
 
 const ProductCard = ({ product }: ShowProductCardProps) => {
     const { id, name, description, price, stock, category, image } = product;
-
+    console.log("ProductCard rendered for:", product.id);
 
     return (
         <section className="product-card">
             <div>
-                <Link to={`product/${id}`}>
+                <Link to={`/product/${id}`}>
                     <h2>{name}</h2>
                     <img className="product-image" src={image} alt={name} width="282" />
                 </Link>
