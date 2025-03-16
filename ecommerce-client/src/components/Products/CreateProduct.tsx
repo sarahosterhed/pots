@@ -1,8 +1,9 @@
 import { FormEvent, useContext, useState } from "react";
-import { ProductContext } from "../../contexts/ProductContext";
+
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { ProductCreate } from "../../types/Product";
+import ProductContext from "../../contexts/ProductContext";
 interface CreateProductProps {
   handleClose: () => void;
 }

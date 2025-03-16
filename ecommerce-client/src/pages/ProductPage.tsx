@@ -1,17 +1,24 @@
+import { Link, useParams } from "react-router"
 import { useContext } from "react";
-import { useParams } from "react-router"
-import { ProductContext } from "../contexts/ProductContext";
+import ProductContext from "../contexts/ProductContext";
 
 export const ProductPage = () => {
     const { id } = useParams();
     const { products } = useContext(ProductContext);
-    console.log(products)
-    const { name, description, image, price, stock, category } = products.find((product) => product.id === Number(id))
+    const product = products.find((product) => product.id === Number(id));
 
 
     return (
-        <section>
-            <h2>{name}</h2>
-        </section>
+        <>
+            <section>
+                <h2>{product?.name}</h2>
+                <p>{product?.description}</p>
+                <img src={product?.image} alt={product?.name} width="400" />
+                <p><b>{product?.category}</b></p>
+                <p>{product?.stock} items left</p>
+                <h2>{product?.price} kr</h2>
+            </section>
+            <Link to={"/"}><button>Back</button></Link>
+        </>
     )
 }

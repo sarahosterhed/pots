@@ -1,28 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { ProductContext } from "../../contexts/ProductContext";
+import { useContext, useState } from "react";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { CreateProduct } from "./CreateProduct";
 import { UpdateProduct } from "./UpdateProduct";
+import ProductContext from "../../contexts/ProductContext";
 
 export const Products = () => {
-  const { fetchProductsHandler, deleteProductHandler } = useProduct();
+  const { deleteProductHandler } = useProduct();
   const { products, dispatch } = useContext(ProductContext);
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const handleOpen = () => setOpenCreate(true);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await fetchProductsHandler();
-      dispatch({
-        type: ActionType.LOADED,
-        payload: JSON.stringify(data),
-      });
-    };
-    getData();
-  }, []);
-
   const handleUpdateProduct = (id: number) => {
     setUpdateProductId(id);
     handleOpen();

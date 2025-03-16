@@ -1,17 +1,14 @@
 import { RouterProvider } from 'react-router'
 import './App.css'
 import { router } from './Router'
-import { ProductContext } from './contexts/ProductContext'
-import { useReducer } from 'react';
-import { ProductReducer } from './reducers/ProductReducer';
+import { ProductProvider } from './contexts/ProductContext'
 function App() {
-  const [products, dispatch] = useReducer(ProductReducer, []);
 
   return (
     <>
-      <ProductContext.Provider value={{ products, dispatch }}>
+      <ProductProvider>
         <RouterProvider router={router}></RouterProvider>
-      </ProductContext.Provider>
+      </ProductProvider>
     </>
   )
 }

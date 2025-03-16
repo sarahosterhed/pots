@@ -7,7 +7,6 @@ type ShowProductCardProps = {
 
 const ProductCard = ({ product }: ShowProductCardProps) => {
     const { id, name, description, price, stock, category, image } = product;
-    console.log("ProductCard rendered for:", product.id);
 
     return (
         <section className="product-card">

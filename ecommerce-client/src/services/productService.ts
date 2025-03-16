@@ -6,7 +6,7 @@ const API_URL = "http://localhost:3000";
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
     const response = await axios.get(`${API_URL}/products`);
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -43,7 +43,7 @@ export const createProduct = async (payload: ProductCreate): Promise<Product> =>
   }
 };
 
-export const updateProduct = async ( id: number, payload: ProductCreate): Promise<Product> => {
+export const updateProduct = async (id: number, payload: ProductCreate): Promise<Product> => {
   try {
     const response = await axios.patch(`${API_URL}/products/${id}`, payload);
     console.log("Product updated", response.data);
