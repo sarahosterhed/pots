@@ -1,16 +1,16 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { ProductContext } from "../../contexts/productContext";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { Product } from "../../types/Product";
+import ProductContext from "../../contexts/ProductContext";
 
 
-interface UpdateProductProps {
+interface IUpdateProductProps {
   productId: number;
   setUpdateProductId: (id: number | null) => void;
 }
 
-export const UpdateProduct = (props: UpdateProductProps) => {
+export const UpdateProduct = (props: IUpdateProductProps) => {
   const [updatedProduct, setUpdatedProduct] = useState<Product>({
     id: 0,
     name: "",
@@ -43,8 +43,7 @@ export const UpdateProduct = (props: UpdateProductProps) => {
     props.setUpdateProductId(null);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
 
     const { name, value } = e.target;

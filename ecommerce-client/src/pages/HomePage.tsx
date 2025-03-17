@@ -1,5 +1,10 @@
+import { DisplayProducts } from "../components/DisplayProducts"
+
 export const HomePage = () => {
     return (
-        <div>homepage</div>
+        <>
+            <h1>Homepage</h1>
+            <DisplayProducts />
+        </>
     )
 }
