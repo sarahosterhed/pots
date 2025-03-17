@@ -1,14 +1,17 @@
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { ProductContext } from "../../contexts/productContext";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
-import { ProductReducer } from "../../reducers/ProductReducer";
 import { CreateProduct } from "./CreateProduct";
 import { UpdateProduct } from "./UpdateProduct";
+import { cartActionType, CartReducer } from "../../reducers/CartReducer";
+import { Product } from "../../types/Product";
+
 
 export const Products = () => {
   const { fetchProductsHandler, deleteProductHandler } = useProduct();
-  const [products, dispatch] = useReducer(ProductReducer, []);
+  const { products, dispatch } = useContext(ProductContext);
+  const [cart, cartDispatch] = useReducer(CartReducer, [])
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   const handleOpen = () => setOpenCreate(true);
@@ -41,6 +44,14 @@ export const Products = () => {
     handleOpen();
   };
 
+  const handleAddToCart = (product: Product, quantity: number) => {
+    console.log(product, quantity)
+    cartDispatch({
+      type: cartActionType.ADD_ITEM,
+      payload: { product, quantity },
+    });
+  };
+
   return (
     <ProductContext.Provider value={{ products, dispatch }}>
       <div>
@@ -64,7 +75,6 @@ export const Products = () => {
               }}
             >
               {updateProductId === p.id ? (
-
                 <UpdateProduct
                   productId={p.id}
                   setUpdateProductId={setUpdateProductId}
@@ -91,6 +101,9 @@ export const Products = () => {
                     </button>
                     <button onClick={() => handleUpdateProduct(p.id)}>
                       Edit
+                    </button>
+                    <button onClick={() => handleAddToCart(p, 1)}>
+                      Add to cart
                     </button>
                   </div>
                 </section>
