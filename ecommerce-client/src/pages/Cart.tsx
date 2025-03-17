@@ -1,21 +1,24 @@
-import { useReducer } from "react";
+import { useContext, useReducer, useState } from "react";
 import { cartActionType, CartReducer } from "../reducers/CartReducer";
 import { CartItem } from "../types/CartItem";
+import CartContext from "../contexts/CartContext";
+import { Product } from "../types/Product";
 
 export const Cart = () => {
-  const [cart, cartDispatch] = useReducer(CartReducer, []);
+  const { cart, cartDispatch } = useContext(CartContext);
+  const [ cartTotal, setCartTotal] = useState<number>(0)
 
-  const handleChangeQuantity = (id: number, quantity: number) => {
+  const handleChangeQuantity = (product: Product, quantity: number) => {
     cartDispatch({
       type: cartActionType.CHANGE_QUANTITY,
-      payload: { id, quantity },
+      payload: { product, quantity },
     });
   };
 
-  const handleRemoveFromCart = (id: number) => {
+  const handleRemoveFromCart = (product: Product) => {
     cartDispatch({
       type: cartActionType.REMOVE_ITEM,
-      payload: id,
+      payload: product,
     });
   };
 
@@ -26,36 +29,40 @@ export const Cart = () => {
     });
   };
 
-  console.log(cart)
+  const totalSum = cart.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0)
+
+  console.log(cart);
 
   return (
     <div>
+      <h2>Cart</h2>
       {cart.map((cartItem: CartItem) => (
-        <div key={cartItem.id}>
-          <h3>{cartItem.product_name}</h3>
-          <p>{cartItem.unit_price}</p>
+        <div key={cartItem.product.id}>
+          <h3>{cartItem.product.name}</h3>
           <div>
             <button
               onClick={() =>
-                cartItem.id !== null && handleChangeQuantity(cartItem.id, 1)
+                cartItem.product.id !== null &&
+                handleChangeQuantity(cartItem.product, 1)
               }
             >
               +
             </button>
-            <p>{cartItem.quantity}</p>
+            <p>x {cartItem.quantity}</p>
             <button
               onClick={() =>
-                cartItem.id !== null && handleChangeQuantity(cartItem.id, -1)
+                cartItem.product.id !== null &&
+                handleChangeQuantity(cartItem.product, -1)
               }
             >
               -
             </button>
-            <p>
-              {cartItem.quantity} X {cartItem.unit_price} kr
-            </p>
+            <p>{cartItem.product.price} sek</p>
+            <p>Total: {cartItem.quantity * cartItem.product.price}kr</p>
             <button
               onClick={() =>
-                cartItem.id !== null && handleRemoveFromCart(cartItem.id)
+                cartItem.product.id !== null &&
+                handleRemoveFromCart(cartItem.product)
               }
               className="bg-red-700 text-white"
             >
@@ -64,6 +71,10 @@ export const Cart = () => {
           </div>
         </div>
       ))}
+          <div>
+            <h3>Bag total</h3>
+            <p>Total: : {totalSum} sek</p>
+          </div>
       <button onClick={handleResetCart}>Reset Cart</button>
     </div>
   );

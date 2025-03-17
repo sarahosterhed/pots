@@ -3,7 +3,7 @@ import { saveTolocalStorage } from "../utils/localStorageUtils";
 
 export interface ICartAction {
   type: cartActionType;
-  payload: CartItem;
+  payload: CartItem | any;
 }
 
 export enum cartActionType {
