@@ -4,17 +4,14 @@ import { CreateProduct } from "./CreateProduct";
 import { UpdateProduct } from "./UpdateProduct";
 
 import ProductContext from "../../contexts/ProductContext";
-import { useContext, useReducer, useState } from "react";
-import { CartReducer, cartActionType } from "../../reducers/CartReducer";
-import { Product } from "../../types/Product";
+import { useContext, useState } from "react";
 
 export const Products = () => {
   const { deleteProductHandler } = useProduct();
   const { products, dispatch } = useContext(ProductContext);
-  // const [cart, cartDispatch] = useReducer(CartReducer, [])
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
-  
+
   const handleOpen = () => setOpenCreate(true);
 
   const handleUpdate = (id: number) => {
@@ -33,14 +30,6 @@ export const Products = () => {
   const handleCreate = () => {
     handleOpen();
   };
-
-  // const handleAddToCart = (product: Product, quantity: number) => {
-  //   console.log(product, quantity)
-  //   cartDispatch({
-  //     type: cartActionType.ADD_ITEM,
-  //     payload: { product, quantity },
-  //   });
-  // };
 
   return (
     <div>
@@ -103,9 +92,6 @@ export const Products = () => {
                   <button onClick={() => handleUpdate(p.id)}>
                     Edit
                   </button>
-                  {/* <button onClick={() => handleAddToCart(p, 1)}>
-                    Add to cart
-                  </button> */}
                 </div>
               </section>
             )}
