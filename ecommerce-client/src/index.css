@@ -48,7 +48,7 @@ button:focus-visible {
 }
 
 .customer-wrapper {
-  border-top: white 1px solid;
+  border-top: orange 1px solid;
   padding: 1rem 0;
   width: 100%;
   display: flex;
@@ -72,7 +72,7 @@ button:focus-visible {
 
 .product-card {
   width: 250px;
-  border: white solid 1px;
+  border: plum solid 1px;
   border-radius: 0.5rem;
   padding: 1rem;
   display: flex;
@@ -96,6 +96,22 @@ button:focus-visible {
 
 .add-to-cart-button {
   margin-top: auto;
+}
+
+.order-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.order-card {
+  width: 250px;
+  border: solid purple 1px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
 }
 
 

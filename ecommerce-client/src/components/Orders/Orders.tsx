@@ -4,7 +4,8 @@ import { Order } from "../../types/Order";
 import { useOrders } from "../../hooks/useOrders";
 import { OrderContext } from "../../contexts/OrderContext";
 import { ActionType, OrderReducer } from "../../reducers/OrderReducer";
-import { OrderItems } from "./OrderItems";
+import { Link } from "react-router";
+import { OrderDetailsPage } from "../../pages/OrderDetailsPage";
 
 export const Orders = () => {
   const [order, setOrder] = useState<Order | null>(null);
@@ -67,15 +68,15 @@ export const Orders = () => {
 
   return (
     <OrderContext.Provider value={{ orders, dispatch }}>
-      <div>
+      <div className="order-container">
         {orders.map((order) => (
-          <div key={order.id}>
-            <p>{order.id}</p>
-            <p>{order.created_at}</p>
-            <p>{order.total_price}</p>
-            <p>{order.payment_id}</p>
-
-            <OrderItems order={order} />
+          <div key={order.id} className="order-card">
+            <Link to={`/admin/order/${order.id}`}>
+              <p>{order.id}</p>
+              <p>{order.created_at}</p>
+              <p>{order.total_price}</p>
+              <p>{order.payment_id}</p>
+            </Link>
 
             {selectedOrderId === order.id ? (
               <form onSubmit={handleSubmit}>
@@ -100,9 +101,10 @@ export const Orders = () => {
                     <option value="delivered">Delivered</option>
                   </select>
                 </label>
-
-                <button type="submit">Update</button>
-                <button type="button" onClick={() => setSelectedOrderId(null)}> Cancel</button>
+                <div className="button-wrapper">
+                  <button type="submit">Update</button>
+                  <button type="button" onClick={() => setSelectedOrderId(null)}> Cancel</button>
+                </div>
               </form>
             ) : (
               <div>
