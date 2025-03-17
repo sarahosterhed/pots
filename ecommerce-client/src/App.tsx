@@ -1,12 +1,14 @@
 import { RouterProvider } from 'react-router'
 import './App.css'
 import { router } from './Router'
-
+import { ProductProvider } from './contexts/ProductContext'
 function App() {
 
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <ProductProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ProductProvider>
     </>
   )
 }

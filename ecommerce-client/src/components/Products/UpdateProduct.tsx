@@ -1,8 +1,8 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { ProductContext } from "../../contexts/productContext";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { Product } from "../../types/Product";
+import ProductContext from "../../contexts/ProductContext";
 
 
 interface IUpdateProductProps {

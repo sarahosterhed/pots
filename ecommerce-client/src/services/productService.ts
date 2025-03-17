@@ -42,7 +42,7 @@ export const createProduct = async (payload: ProductCreate): Promise<Product> =>
   }
 };
 
-export const updateProduct = async ( id: number, payload: ProductCreate): Promise<Product> => {
+export const updateProduct = async (id: number, payload: ProductCreate): Promise<Product> => {
   try {
     const response = await axios.patch(`${PRODUCT_URL}/${id}`, payload);
     return response.data
