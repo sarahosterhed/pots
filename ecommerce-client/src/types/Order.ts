@@ -35,7 +35,6 @@ export type OrderDetails = {
   customer_postal_code: string;
   customer_city: string;
   customer_country: string;
-  customers_created_at: string;
   order_items: OrderItem[];
 };
 export type OrderCreate = Omit<
