@@ -1,6 +1,7 @@
-import { createContext, Dispatch, PropsWithChildren, useReducer } from "react";
+import { createContext, Dispatch, PropsWithChildren, useEffect, useReducer } from "react";
 import { CartReducer, ICartAction } from "../reducers/CartReducer";
 import { CartItem } from "../types/CartItem";
+import { getFromLocalStorage, saveTolocalStorage } from "../utils/localStorageUtils";
 
 export interface ICartContext {
   cart: CartItem[];
@@ -13,16 +14,16 @@ const CartContext = createContext<ICartContext>({
 });
 
 export const CartProvider = ({ children }: PropsWithChildren) => {
-  const [cart, cartDispatch] = useReducer(
-    CartReducer,
-    []
-
-    //     () => {
-
-    // const cachedCart = localStorage.getItem('Cart')
-    // return cachedCart ? JSON.parse(cachedCart) : []
-    // }
+  const [cart, cartDispatch] = useReducer( CartReducer, [], 
+    () => { 
+      const cachedCart = getFromLocalStorage('cart');
+      return cachedCart ?? [];
+    }
   );
+
+  useEffect(() => {
+    saveTolocalStorage('cart', cart)
+  }, [cart])
 
   return (
     <CartContext.Provider value={{ cart, cartDispatch }}>

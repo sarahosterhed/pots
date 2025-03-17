@@ -37,9 +37,9 @@ export const Cart = () => {
     <div>
       <h2>Cart</h2>
       {cart.map((cartItem: CartItem) => (
-        <div key={cartItem.product.id}>
+        <div key={cartItem.product.id} className="cart-wrapper">
           <h3>{cartItem.product.name}</h3>
-          <div>
+          <div className="cart-item">
             <button
               onClick={() =>
                 cartItem.product.id !== null &&
@@ -58,7 +58,6 @@ export const Cart = () => {
               -
             </button>
             <p>{cartItem.product.price} sek</p>
-            <p>Total: {cartItem.quantity * cartItem.product.price}kr</p>
             <button
               onClick={() =>
                 cartItem.product.id !== null &&
@@ -71,9 +70,9 @@ export const Cart = () => {
           </div>
         </div>
       ))}
-          <div>
+          <div className="cart-wrapper">
             <h3>Bag total</h3>
-            <p>Total: : {totalSum} sek</p>
+            {totalSum === 0 ? <p>Your bag is empty</p> : <h3>Total: {totalSum} kr</h3>}
           </div>
       <button onClick={handleResetCart}>Reset Cart</button>
     </div>
