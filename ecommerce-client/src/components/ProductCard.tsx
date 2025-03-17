@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 import { Product } from "../types/Product";
-import { useReducer } from "react";
-import { CartReducer, cartActionType } from "../reducers/CartReducer";
+import { useContext } from "react";
+import { cartActionType } from "../reducers/CartReducer";
+import CartContext from "../contexts/CartContext";
 
 type ShowProductCardProps = {
   product: Product;
@@ -9,7 +10,7 @@ type ShowProductCardProps = {
 
 const ProductCard = ({ product }: ShowProductCardProps) => {
   const { id, name, description, price, stock, category, image } = product;
-  const [cart, cartDispatch] = useReducer(CartReducer, []);
+  const {cart, cartDispatch} = useContext(CartContext);
 
   const handleAddToCart = (product: Product, quantity: number) => {
     console.log("payload = product:", product, "quantity:", quantity);

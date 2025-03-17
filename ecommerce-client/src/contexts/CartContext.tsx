@@ -30,3 +30,5 @@ export const CartProvider = ({ children }: PropsWithChildren) => {
     </CartContext.Provider>
   );
 };
+
+export default CartContext;
