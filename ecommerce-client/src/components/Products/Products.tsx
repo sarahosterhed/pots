@@ -1,16 +1,22 @@
-import { useContext, useState } from "react";
 import { useProduct } from "../../hooks/useProducts";
 import { ActionType } from "../../reducers/CustomerReducer";
 import { CreateProduct } from "./CreateProduct";
 import { UpdateProduct } from "./UpdateProduct";
+
 import ProductContext from "../../contexts/ProductContext";
+import { useContext, useReducer, useState } from "react";
+import { CartReducer, cartActionType } from "../../reducers/CartReducer";
+import { Product } from "../../types/Product";
 
 export const Products = () => {
   const { deleteProductHandler } = useProduct();
   const { products, dispatch } = useContext(ProductContext);
+  // const [cart, cartDispatch] = useReducer(CartReducer, [])
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
+  
   const handleOpen = () => setOpenCreate(true);
+
   const handleUpdate = (id: number) => {
     setUpdateProductId(id);
     handleOpen();
@@ -27,6 +33,14 @@ export const Products = () => {
   const handleCreate = () => {
     handleOpen();
   };
+
+  // const handleAddToCart = (product: Product, quantity: number) => {
+  //   console.log(product, quantity)
+  //   cartDispatch({
+  //     type: cartActionType.ADD_ITEM,
+  //     payload: { product, quantity },
+  //   });
+  // };
 
   return (
     <div>
@@ -71,6 +85,7 @@ export const Products = () => {
                 <p>Created At: {p.created_at}</p>
                 <div
                   style={{ marginTop: "10px", display: "flex", gap: "10px" }}
+
                 />
                 <p>Name: {p.name}</p>
                 <p>Description: {p.description}</p>
@@ -81,12 +96,16 @@ export const Products = () => {
                 <div
                   style={{ marginTop: "10px", display: "flex", gap: "10px" }}
                 >
+
                   <button onClick={() => handleDelete(p.id)}>
                     Delete
                   </button>
                   <button onClick={() => handleUpdate(p.id)}>
                     Edit
                   </button>
+                  {/* <button onClick={() => handleAddToCart(p, 1)}>
+                    Add to cart
+                  </button> */}
                 </div>
               </section>
             )}
@@ -94,6 +113,5 @@ export const Products = () => {
         ))}
       </section>
     </div>
-
   );
 };
