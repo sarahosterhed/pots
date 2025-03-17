@@ -5,3 +5,5 @@ export type OrderItem = {
   quantity: number
   unit_price: number
 }
+
+export type OrderItemUpdate = Pick<OrderItem, "quantity">;

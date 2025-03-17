@@ -1,14 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useReducer, useState } from "react";
 import { fetchOrderById } from "../../services/orderService";
-import { Order } from "../../types/Order";
+import { OrderDetails } from "../../types/Order";
 import { useOrders } from "../../hooks/useOrders";
 import { OrderContext } from "../../contexts/OrderContext";
 import { ActionType, OrderReducer } from "../../reducers/OrderReducer";
 import { Link } from "react-router";
-import { OrderDetailsPage } from "../../pages/OrderDetailsPage";
 
 export const Orders = () => {
-  const [order, setOrder] = useState<Order | null>(null);
+  const [order, setOrder] = useState<OrderDetails | null>(null);
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
   const [orders, dispatch] = useReducer(OrderReducer, []);
   const { deleteOrderHandler, updateOrderHandler, fetchOrdersHandler } = useOrders();

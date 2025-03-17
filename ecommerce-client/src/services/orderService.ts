@@ -1,7 +1,9 @@
 import axios from "axios";
-import { Order, OrderCreate, OrderUpdate } from "../types/Order";
+import { Order, OrderCreate, OrderDetails, OrderUpdate } from "../types/Order";
+import { OrderItem, OrderItemUpdate } from "../types/OrderItem";
 
 const ORDER_URL = "http://localhost:3000/orders";
+const ORDERITEMS_URL = "http://localhost:3000/order-items";
 
 export const fetchOrders = async (): Promise<Order[]> => {
   try {
@@ -13,7 +15,7 @@ export const fetchOrders = async (): Promise<Order[]> => {
   }
 };
 
-export const fetchOrderById = async (id: number): Promise<Order> => {
+export const fetchOrderById = async (id: number): Promise<OrderDetails> => {
   try {
     const response = await axios.get(`${ORDER_URL}/${id}`);
     return response.data;
@@ -54,3 +56,13 @@ export const createOrder = async (payload: OrderCreate): Promise<Order> => {
     throw new Error();
   }
 };
+
+export const updateOrderItem = async (id: number, payload: OrderItemUpdate): Promise<OrderItem> => {
+  try {
+    const response = await axios.patch(`${ORDERITEMS_URL}/${id}`, payload);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+}
