@@ -11,7 +11,7 @@ import { Product } from "../../types/Product";
 export const Products = () => {
   const { deleteProductHandler } = useProduct();
   const { products, dispatch } = useContext(ProductContext);
-  const [cart, cartDispatch] = useReducer(CartReducer, [])
+  // const [cart, cartDispatch] = useReducer(CartReducer, [])
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
   
@@ -34,13 +34,13 @@ export const Products = () => {
     handleOpen();
   };
 
-  const handleAddToCart = (product: Product, quantity: number) => {
-    console.log(product, quantity)
-    cartDispatch({
-      type: cartActionType.ADD_ITEM,
-      payload: { product, quantity },
-    });
-  };
+  // const handleAddToCart = (product: Product, quantity: number) => {
+  //   console.log(product, quantity)
+  //   cartDispatch({
+  //     type: cartActionType.ADD_ITEM,
+  //     payload: { product, quantity },
+  //   });
+  // };
 
   return (
     <div>
@@ -103,9 +103,9 @@ export const Products = () => {
                   <button onClick={() => handleUpdate(p.id)}>
                     Edit
                   </button>
-                  <button onClick={() => handleAddToCart(p, 1)}>
+                  {/* <button onClick={() => handleAddToCart(p, 1)}>
                     Add to cart
-                  </button>   
+                  </button> */}
                 </div>
               </section>
             )}

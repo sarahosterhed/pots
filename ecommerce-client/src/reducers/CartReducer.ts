@@ -1,10 +1,9 @@
-import { Product } from './../types/Product';
 import { CartItem } from "../types/CartItem";
-import { saveTolocalStorage } from '../utils/localSTorageUtils';
+import { saveTolocalStorage } from "../utils/localStorageUtils";
 
 export interface ICartAction {
   type: cartActionType;
-  payload: Product | any;
+  payload: CartItem;
 }
 
 export enum cartActionType {
@@ -19,46 +18,56 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
 
   switch (type) {
     case cartActionType.ADD_ITEM: {
-        const cartItemExists = cart.find(
-            (cartItem) => cartItem.product_id === payload.product.id
-        );
-        console.log(cart)
+      const cartItemExists = cart.find(
+        (cartItem) => cartItem.product.id == payload.product.id
+      );
 
-        if (!cartItemExists) return [...cart, payload];
+      console.log("payload", payload);
+      // console.log("cartItemExists", cartItemExists);
+      console.log("cart", cart);
+
+      // const newCartItems = [...cart, payload];
+      // console.log("new cart items", newCartItems);
+      if (!cartItemExists) {
+        console.log("cartItemExists", cartItemExists)
+        return [...cart, payload];
         
-        const cachedData = {
-          cart: cart,
-        }
-        saveTolocalStorage('Cart', JSON.stringify(cachedData))
-
+      } else {
+        
         return cart.map((cartItem) =>
-            cartItem.product_id === payload.product_id
-        ? { ...cartItem, quantity: cartItem.quantity + (payload.quantity || 1) }
+          cartItem.product.id === payload.product.id
+        ? {
+          ...cartItem,
+          quantity: cartItem.quantity + (payload.quantity || 1),
+        }
         : cartItem
-
-    );
+      );
+      // saveTolocalStorage("Cart", JSON.stringify(cart));
+      }
 
     }
 
     case cartActionType.CHANGE_QUANTITY: {
-      return cart.map((cartItem) => {
-        if (cartItem.product_id === payload.product.id) {
-          const totalQuantity = cartItem.quantity + payload.quantity;
-          if (totalQuantity <= 0) {
-            return null;
+      return cart
+        .map((cartItem) => {
+          if (cartItem.product.id === payload.product.id) {
+            const totalQuantity = cartItem.quantity + payload.quantity;
+            if (totalQuantity <= 0) {
+              return null;
+            }
+            return {
+              ...cartItem,
+              quantity: totalQuantity,
+            };
           }
-          return {
-            ...cartItem,
-            quantity: totalQuantity,
-          };
-        }
-        return cartItem;
-      }).filter(cartItem => cartItem !== null);
+          return cartItem;
+        })
+        .filter((cartItem) => cartItem !== null);
     }
 
     case cartActionType.REMOVE_ITEM: {
       return cart.filter(
-        (cartItem) => cartItem.product_id !== payload.product.id
+        (cartItem) => cartItem.product.id !== payload.product.id
       );
     }
 
@@ -69,10 +78,4 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
     default:
       return cart;
   }
-
 };
-
-
-
-
-
