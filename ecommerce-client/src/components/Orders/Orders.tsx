@@ -4,6 +4,7 @@ import { Order } from "../../types/Order";
 import { useOrders } from "../../hooks/useOrders";
 import { OrderContext } from "../../contexts/OrderContext";
 import { ActionType, OrderReducer } from "../../reducers/OrderReducer";
+import { OrderItems } from "./OrderItems";
 
 export const Orders = () => {
   const [order, setOrder] = useState<Order | null>(null);
@@ -31,6 +32,7 @@ export const Orders = () => {
     };
     getData();
   }, [selectedOrderId]);
+
 
   const handleUpdate = (e: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target as HTMLSelectElement;
@@ -72,6 +74,8 @@ export const Orders = () => {
             <p>{order.created_at}</p>
             <p>{order.total_price}</p>
             <p>{order.payment_id}</p>
+
+            <OrderItems order={order} />
 
             {selectedOrderId === order.id ? (
               <form onSubmit={handleSubmit}>

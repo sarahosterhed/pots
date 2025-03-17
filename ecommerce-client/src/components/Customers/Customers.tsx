@@ -12,6 +12,7 @@ export const Customers = () => {
     const [editingCustomerId, setEditingCustomerId] = useState<number | null>(null);
 
     useEffect(() => {
+        if (customers.length > 0) return;
         const getData = async () => {
             const customersData = await fetchCustomersHandler();
             dispatch({
@@ -19,7 +20,6 @@ export const Customers = () => {
                 payload: JSON.stringify(customersData)
             })
         }
-        if (customers.length > 0) return;
         getData();
     })
 
