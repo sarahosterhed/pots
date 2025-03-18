@@ -1,9 +1,8 @@
 import { CartItem } from "../types/CartItem";
-import { saveTolocalStorage } from "../utils/localStorageUtils";
 
 export interface ICartAction {
   type: cartActionType;
-  payload: CartItem;
+  payload: CartItem | any;
 }
 
 export enum cartActionType {
@@ -22,29 +21,21 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
         (cartItem) => cartItem.product.id == payload.product.id
       );
 
-      console.log("payload", payload);
-      // console.log("cartItemExists", cartItemExists);
       console.log("cart", cart);
 
-      // const newCartItems = [...cart, payload];
-      // console.log("new cart items", newCartItems);
       if (!cartItemExists) {
-        console.log("cartItemExists", cartItemExists)
+        console.log("cartItemExists", cartItemExists);
         return [...cart, payload];
-        
       } else {
-        
         return cart.map((cartItem) =>
           cartItem.product.id === payload.product.id
-        ? {
-          ...cartItem,
-          quantity: cartItem.quantity + (payload.quantity || 1),
-        }
-        : cartItem
-      );
-      // saveTolocalStorage("Cart", JSON.stringify(cart));
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + (payload.quantity || 1),
+              }
+            : cartItem
+        );
       }
-
     }
 
     case cartActionType.CHANGE_QUANTITY: {
