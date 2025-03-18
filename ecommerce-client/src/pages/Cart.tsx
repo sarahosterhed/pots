@@ -1,12 +1,11 @@
-import { useContext, useReducer, useState } from "react";
-import { cartActionType, CartReducer } from "../reducers/CartReducer";
+import { useContext } from "react";
+import { cartActionType } from "../reducers/CartReducer";
 import { CartItem } from "../types/CartItem";
 import CartContext from "../contexts/CartContext";
 import { Product } from "../types/Product";
 
 export const Cart = () => {
   const { cart, cartDispatch } = useContext(CartContext);
-  const [ cartTotal, setCartTotal] = useState<number>(0)
 
   const handleChangeQuantity = (product: Product, quantity: number) => {
     cartDispatch({
@@ -31,7 +30,6 @@ export const Cart = () => {
 
   const totalSum = cart.reduce((sum, cartItem) => sum + cartItem.product.price * cartItem.quantity, 0)
 
-  console.log(cart);
 
   return (
     <div>
@@ -60,7 +58,6 @@ export const Cart = () => {
             <p>{cartItem.product.price} sek</p>
             <button
               onClick={() =>
-                cartItem.product.id !== null &&
                 handleRemoveFromCart(cartItem.product)
               }
               className="bg-red-700 text-white"
@@ -73,6 +70,7 @@ export const Cart = () => {
           <div className="cart-wrapper">
             <h3>Bag total</h3>
             {totalSum === 0 ? <p>Your bag is empty</p> : <h3>Total: {totalSum} kr</h3>}
+
           </div>
       <button onClick={handleResetCart}>Reset Cart</button>
     </div>

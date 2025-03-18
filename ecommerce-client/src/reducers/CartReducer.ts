@@ -57,8 +57,9 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
     }
 
     case cartActionType.REMOVE_ITEM: {
+      console.log("cart- REMOVE", cart)
       return cart.filter(
-        (cartItem) => cartItem.product.id !== payload.product.id
+        (cartItem) => cartItem.product.id !== payload.id
       );
     }
 
