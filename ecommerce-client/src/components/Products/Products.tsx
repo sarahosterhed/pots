@@ -39,18 +39,11 @@ export const Products = () => {
         <button onClick={handleCreate}>Create new product</button>
       )}
       <h2>Manage Products</h2>
-      <section id="product-list">
+      <section id="product-list" className="products-wrapper">
         {products.map((p) => (
           <article
             key={p.id}
             className="list-group-item"
-            style={{
-              border: "1px solid rgba(255, 255, 255, 0.2)",
-              borderRadius: "8px",
-              padding: "15px",
-              marginBottom: "15px",
-              backgroundColor: "rgba(255, 255, 255, 0.05)",
-            }}
           >
             {updateProductId === p.id ? (
 
@@ -59,33 +52,15 @@ export const Products = () => {
                 setUpdateProductId={setUpdateProductId}
               />
             ) : (
-              <section
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "5px",
-                }}
-              >
+              <section className="product-card">
                 <p>Name: {p.name}</p>
                 <p>Description: {p.description}</p>
                 <p>Price: {p.price} SEK</p>
                 <p>Stock: {p.stock}</p>
                 <p>Category: {p.category}</p>
                 <p>Created At: {p.created_at}</p>
-                <div
-                  style={{ marginTop: "10px", display: "flex", gap: "10px" }}
-
-                />
-                <p>Name: {p.name}</p>
-                <p>Description: {p.description}</p>
-                <p>Price: {p.price} SEK</p>
-                <p>Stock: {p.stock}</p>
-                <p>Category: {p.category}</p>
-                <p>Created At: {p.created_at}</p>
-                <div
-                  style={{ marginTop: "10px", display: "flex", gap: "10px" }}
-                >
-
+                <div />
+                <div className="button-wrapper">
                   <button onClick={() => handleDelete(p.id)}>
                     Delete
                   </button>
