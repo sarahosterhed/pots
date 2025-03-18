@@ -1,4 +1,4 @@
-import { createOrder, updateOrderItem, updateOrderItems } from "../services/orderService";
+import { createOrder, deleteOrderItem, updateOrderItem, updateOrderItems } from "../services/orderService";
 import { updateOrder } from "../services/orderService";
 import { useState } from "react";
 import {
@@ -83,7 +83,19 @@ export const useOrders = () => {
       const data = await updateOrderItem(id, payload);
       return data;
     } catch (error) {
-      setError("Error: Failed to udate order");
+      setError("Error: Failed to udate order item");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteOrderItemHandler = async (id: number) => {
+    setIsLoading(true);
+    try {
+      await deleteOrderItem(id);
+    } catch (error) {
+      setError("Error: Failed to delete order item");
       throw error;
     } finally {
       setIsLoading(false);
@@ -98,6 +110,7 @@ export const useOrders = () => {
     deleteOrderHandler,
     updateOrderHandler,
     createOrderHandler,
-    updateOrderItemHandler
+    updateOrderItemHandler,
+    deleteOrderItemHandler
   };
 };

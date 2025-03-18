@@ -66,3 +66,13 @@ export const updateOrderItem = async (id: number, payload: OrderItemUpdate): Pro
     throw new Error();
   }
 }
+
+export const deleteOrderItem = async (id: number): Promise<void> => {
+  try {
+    const response = await axios.delete(`${ORDERITEMS_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+}

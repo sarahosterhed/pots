@@ -11,11 +11,11 @@ export enum ActionType {
     DELETED,
 }
 
-export const OrderReducer = ( orders: Order[], action: Action) : Order[] => {
+export const OrderReducer = (orders: Order[], action: Action): Order[] => {
     if (action.type === ActionType.LOADED) {
         return JSON.parse(action.payload).reverse();
     }
-    if (action.type === ActionType.UPDATED){
+    if (action.type === ActionType.UPDATED) {
         const updatedOrder = JSON.parse(action.payload)
         return orders.map((Order) => Order.id === updatedOrder.id ? updatedOrder : Order)
     }

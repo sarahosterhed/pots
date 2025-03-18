@@ -24,7 +24,7 @@ export const OrderDetailsPage = () => {
         order_items: []
     });
     const { id } = useParams()
-    const { fetchOrderByIdHandler, updateOrderItemHandler } = useOrders();
+    const { fetchOrderByIdHandler, updateOrderItemHandler, deleteOrderItemHandler } = useOrders();
     const [updateItemId, setUpdateItemId] = useState<number | null>(null);
 
     useEffect(() => {
@@ -55,6 +55,38 @@ export const OrderDetailsPage = () => {
         order_items } = orderDetails;
 
 
+    const handleIncrease = async (itemId: number) => {
+        setOrderDetails({
+            ...orderDetails,
+            order_items: orderDetails.order_items.map((item) => (
+                item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+            ))
+        })
+    }
+
+    const handleDecrease = async (itemId: number) => {
+        setOrderDetails({
+            ...orderDetails,
+            order_items: orderDetails.order_items.map((item) => (
+                item.id === itemId && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            ))
+        })
+    }
+
+    const handleSave = async (itemId: number, quantity: number) => {
+        const payload = { quantity: quantity };
+        await updateOrderItemHandler(itemId, payload);
+        setUpdateItemId(Number(null));
+    }
+
+    const handleDelete = async (itemId: number) => {
+        await deleteOrderItemHandler(itemId);
+        setUpdateItemId(Number(null));
+    }
+
+
     return (
         <section className="order-details-wrapper">
             <div className="order-main">
@@ -62,7 +94,7 @@ export const OrderDetailsPage = () => {
                 <p><b>Status:</b> {order_status}</p>
                 <p><b>Created at:</b> {created_at}</p>
             </div>
-            <div className="flex-columns">
+            <div className="flex">
                 <section className="order-payment-wrapper">
                     <h3>Payment</h3>
                     <p><span>Payment id:</span> <span>{payment_id}</span></p>
@@ -86,16 +118,19 @@ export const OrderDetailsPage = () => {
                         <p>{item.product_name}</p>
                         <p>{item.quantity}</p>
                         {updateItemId !== item.id ? (
-                            <button onClick={() => { setUpdateItemId(Number(id)) }}>Edit quantity</button>
+                            <button onClick={() => { setUpdateItemId(Number(item.id)) }}>Edit</button>
 
                         ) : (
                             <div>
-                                <div className="flex-columns">
-                                    <button>-</button>
+                                <div className="flex">
+                                    <button onClick={() => handleDecrease(item.id)}>-</button>
                                     <p>{item.quantity}</p>
-                                    <button>+</button>
+                                    <button onClick={() => { handleIncrease(item.id) }}>+</button>
                                 </div>
-                                <button>Save</button>
+                                <div className="flex">
+                                    <button onClick={() => { handleDelete(item.id) }} >Delete</button>
+                                    <button onClick={() => { handleSave(item.id, item.quantity) }} >Save</button>
+                                </div>
                             </div>
                         )
                         }
