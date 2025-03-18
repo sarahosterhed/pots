@@ -6,22 +6,23 @@ export type Action = {
 }
 
 export enum ActionType {
-    LOADED,
-    UPDATED,
-    DELETED,
+    ORDERS_LOADED,
+    ORDER_UPDATED,
+    ORDER_DELETED,
 }
 
 export const OrderReducer = (orders: Order[], action: Action): Order[] => {
-    if (action.type === ActionType.LOADED) {
+    if (action.type === ActionType.ORDERS_LOADED) {
         return JSON.parse(action.payload).reverse();
     }
-    if (action.type === ActionType.UPDATED) {
+    if (action.type === ActionType.ORDER_UPDATED) {
         const updatedOrder = JSON.parse(action.payload)
         return orders.map((Order) => Order.id === updatedOrder.id ? updatedOrder : Order)
     }
-    if (action.type === ActionType.DELETED) {
+    if (action.type === ActionType.ORDER_DELETED) {
         return orders.filter((Order) => Order.id !== JSON.parse(action.payload))
     }
+
 
     return orders;
 }

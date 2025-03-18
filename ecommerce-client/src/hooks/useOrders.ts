@@ -1,4 +1,4 @@
-import { createOrder, deleteOrderItem, updateOrderItem, updateOrderItems } from "../services/orderService";
+import { createOrder, deleteOrderItem, updateOrderItem } from "../services/orderService";
 import { updateOrder } from "../services/orderService";
 import { useState } from "react";
 import {
@@ -7,7 +7,7 @@ import {
   fetchOrders,
 } from "../services/orderService";
 import { OrderCreate, OrderUpdate } from "../types/Order";
-import { OrderItemUpdate } from "../types/OrderItem";
+import { OrderItemUpdate } from "../types/Order";
 
 export const useOrders = () => {
   const [error, setError] = useState<string>("");

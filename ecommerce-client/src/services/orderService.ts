@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Order, OrderCreate, OrderDetails, OrderUpdate } from "../types/Order";
-import { OrderItem, OrderItemUpdate } from "../types/OrderItem";
+import { OrderItemUpdate } from "../types/Order";
 
 const ORDER_URL = "http://localhost:3000/orders";
 const ORDERITEMS_URL = "http://localhost:3000/order-items";
@@ -57,7 +57,7 @@ export const createOrder = async (payload: OrderCreate): Promise<Order> => {
   }
 };
 
-export const updateOrderItem = async (id: number, payload: OrderItemUpdate): Promise<OrderItem> => {
+export const updateOrderItem = async (id: number, payload: OrderItemUpdate) => {
   try {
     const response = await axios.patch(`${ORDERITEMS_URL}/${id}`, payload);
     return response.data;

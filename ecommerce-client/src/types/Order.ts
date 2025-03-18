@@ -1,5 +1,3 @@
-import { OrderItem } from "./OrderItem";
-
 export type Order = {
   id: number | null;
   customer_id: number;
@@ -37,16 +35,26 @@ export type OrderDetails = {
   customer_country: string;
   order_items: OrderItem[];
 };
-export type OrderCreate = Omit<
-  Order,
+export type OrderCreate = Pick<
+  OrderDetails,
   | "customer_id"
-  | "total_price"
   | "payment_status"
   | "payment_id"
   | "order_status"
+  | "order_items"
 >;
 
-export type OrderUpdate = Omit<
+export type OrderUpdate = Pick<
   Order,
   "payment_status" | "payment_id" | "order_status"
 >;
+
+export type OrderItem = {
+  id: number | null
+  product_id: number
+  product_name: string
+  quantity: number
+  unit_price: number
+}
+
+export type OrderItemUpdate = Pick<OrderItem, "quantity">;
