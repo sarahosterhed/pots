@@ -3,6 +3,7 @@ import { Customers } from "../components/Customers/Customers"
 import { Orders } from "../components/Orders/Orders"
 import { OrderProvider } from "../contexts/OrderContext"
 import { useState } from "react";
+import { CustomerProvider } from "../contexts/CustomerContext";
 
 type SubPage = "customers" | "products" | "orders";
 
@@ -25,7 +26,11 @@ export const AdminPage = () => {
                 </OrderProvider>
             )}
             {activeSection === "products" && <Products />}
-            {activeSection === "customers" && <Customers />}
+            {activeSection === "customers" && (
+                <CustomerProvider>
+                    <Customers />
+                </CustomerProvider>
+            )}
         </div>
     )
 }
