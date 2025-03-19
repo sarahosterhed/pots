@@ -8,19 +8,21 @@ export const Navbar = () => {
     <>
       <nav>
         <ul>
-          <li>
-            <NavLink to={"/"}>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/admin"}>Admin</NavLink>
-          </li>
+          <div className="nav-links">
+            <li>
+              <NavLink to={"/"}>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/admin"}>Admin</NavLink>
+            </li>
+          </div>
           <li>
             <NavLink to={"/cart"}>
               <button className="cart-button">
                 <svg
                   className="cart-icon"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 22 22"
                 >
                   <path
                     fill="currentColor"

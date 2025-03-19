@@ -1,6 +1,6 @@
 export const Footer = () => {
     return (
-        <div>
+        <>
             <section>
                 <p>Contact</p>
             </section>
@@ -10,6 +10,6 @@ export const Footer = () => {
             <section>
                 <p>Cookie policy</p>
             </section>
-        </div>
+        </>
     )
 }

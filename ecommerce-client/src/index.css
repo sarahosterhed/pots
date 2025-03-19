@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 0;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -46,6 +50,51 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+main {
+  flex: 1;
+}
+
+nav {
+  padding: 1rem 2rem;
+  border-bottom: solid white 1px;
+  ul {
+    margin: 0;
+    display: flex;
+    gap: 3rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+    }
+
+    li {
+      list-style: none;
+      a {
+        color: white;
+        transition: all 0.2s;
+      }
+    }
+  }
+}
+
+footer {
+  background-color: #242424;
+  box-sizing: border-box;
+  width: 100%;
+  bottom: 0;
+  margin-top: 5rem;
+  padding: 2rem;
+  border-top: solid white 1px;
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .customer-wrapper {
   border-top: orange 1px solid;
@@ -138,6 +187,7 @@ button:focus-visible {
   position: relative;
   background: none;
   cursor: pointer;
+}
 
 .order-container {
   margin-top: 1rem;
