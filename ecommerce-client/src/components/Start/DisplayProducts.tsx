@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import ProductCard from "./ProductCard";
-import ProductContext from "../contexts/ProductContext";
+import ProductContext from "../../contexts/ProductContext";
 
 export const DisplayProducts = () => {
   const { products } = useContext(ProductContext);

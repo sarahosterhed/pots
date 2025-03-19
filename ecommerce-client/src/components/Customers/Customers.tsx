@@ -1,17 +1,18 @@
-import { useEffect, useReducer, useState } from "react"
-import { CustomerContext } from "../../contexts/customerContext";
+import { useContext, useEffect, useState } from "react"
 import { useCustomers } from "../../hooks/useCustomers";
-import { CustomerReducer, ActionType } from "../../reducers/CustomerReducer";
+import { ActionType } from "../../reducers/CustomerReducer";
 import { CreateCustomer } from "./CreateCustomer";
 import { UpdateCustomer } from "./UpdateCustomer";
+import CustomerContext from "../../contexts/CustomerContext";
 
 
 export const Customers = () => {
     const { fetchCustomersHandler, deleteCustomerHandler } = useCustomers()
-    const [customers, dispatch] = useReducer(CustomerReducer, []);
+    const { customers, dispatch } = useContext(CustomerContext)
     const [editingCustomerId, setEditingCustomerId] = useState<number | null>(null);
 
     useEffect(() => {
+        if (customers.length > 0) return;
         const getData = async () => {
             const customersData = await fetchCustomersHandler();
             dispatch({
@@ -19,7 +20,6 @@ export const Customers = () => {
                 payload: JSON.stringify(customersData)
             })
         }
-        if (customers.length > 0) return;
         getData();
     })
 
@@ -32,7 +32,7 @@ export const Customers = () => {
     }
 
     return (
-        <CustomerContext.Provider value={{ customers, dispatch }}>
+        <>
             <CreateCustomer />
             <section>
                 {customers.map(({ id, firstname, lastname, city }) => (
@@ -49,14 +49,10 @@ export const Customers = () => {
                                     <button onClick={() => handleDelete(id)}>Delete</button>
                                 </div>
                             </>
-                        )
-
-
-                        }
+                        )}
                     </div>
-                )
-                )}
+                ))}
             </section>
-        </CustomerContext.Provider>
+        </>
     )
 }

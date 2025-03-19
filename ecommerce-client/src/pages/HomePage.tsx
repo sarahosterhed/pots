@@ -1,4 +1,4 @@
-import { DisplayProducts } from "../components/DisplayProducts"
+import { DisplayProducts } from "../components/Start/DisplayProducts"
 
 export const HomePage = () => {
     return (
