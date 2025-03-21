@@ -10,7 +10,7 @@ export const saveTolocalStorage = (
     localStorage.setItem(name, JSON.stringify(cachedCart))
 }
 
-export const getFromLocalStorage = ( name: string ) => {
+export const getFromLocalStorage = (name: string) => {
     const cachedCart = JSON.parse(localStorage.getItem(name) as string);
 
     if (!cachedCart) return null;

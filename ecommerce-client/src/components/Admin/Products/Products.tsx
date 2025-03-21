@@ -1,9 +1,8 @@
-import { useProduct } from "../../hooks/useProducts";
-import { ActionType } from "../../reducers/CustomerReducer";
+import ProductContext from "../../../contexts/ProductContext";
+import { useProduct } from "../../../hooks/useProducts";
+import { ProductActionType } from "../../../reducers/ProductReducer";
 import { CreateProduct } from "./CreateProduct";
 import { UpdateProduct } from "./UpdateProduct";
-
-import ProductContext from "../../contexts/ProductContext";
 import { useContext, useState } from "react";
 
 export const Products = () => {
@@ -22,7 +21,7 @@ export const Products = () => {
   const handleDelete = async (id: number) => {
     await deleteProductHandler(id);
     dispatch({
-      type: ActionType.DELETED,
+      type: ProductActionType.DELETED,
       payload: JSON.stringify(id),
     });
   };

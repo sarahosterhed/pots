@@ -6,6 +6,7 @@ import { ProductPage } from "./pages/ProductPage";
 import { AdminPage } from "./pages/AdminPage";
 import { Cart } from "./pages/Cart";
 import { OrderDetailsPage } from "./pages/OrderDetailsPage";
+import { CheckoutPage } from "./pages/CheckoutPage";
 
 
 export const router = createBrowserRouter([
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             {
                 path: "/admin/order/:id",
                 element: <OrderDetailsPage />
+            },
+            {
+                path: "/checkout",
+                element: <CheckoutPage />
             }
         ]
 

@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import { useOrders } from "../../hooks/useOrders";
-import OrderContext from "../../contexts/OrderContext";
-import { ActionType } from "../../reducers/OrderReducer";
 import { Link } from "react-router";
+import OrderContext from "../../../contexts/OrderContext";
+import { useOrders } from "../../../hooks/useOrders";
+import { OrderActionType } from "../../../reducers/OrderReducer";
 
 export const Orders = () => {
   const { orders, dispatch } = useContext(OrderContext)
@@ -13,12 +13,13 @@ export const Orders = () => {
       const data = await fetchOrdersHandler();
       console.log(data);
       dispatch({
-        type: ActionType.ORDERS_LOADED,
+        type: OrderActionType.ORDERS_LOADED,
         payload: JSON.stringify(data),
       });
     };
+    if (orders.length > 0) return;
     getData();
-  }, []);
+  });
 
   return (
     <div className="order-container">

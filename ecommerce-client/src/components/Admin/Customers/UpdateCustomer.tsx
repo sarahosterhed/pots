@@ -1,11 +1,9 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
-import { useCustomers } from "../../hooks/useCustomers";
-import { ActionType } from "../../reducers/CustomerReducer";
-import { updateCustomer } from "../../services/customerService";
-import { Customer } from "../../types/Customer";
-import CustomerContext from "../../contexts/CustomerContext";
-
-
+import CustomerContext from "../../../contexts/CustomerContext";
+import { useCustomers } from "../../../hooks/useCustomers";
+import { updateCustomer } from "../../../services/customerService";
+import { Customer } from "../../../types/Customer";
+import { CustomerActionType } from "../../../reducers/CustomerReducer";
 
 type UpdateCustomerProps = {
     customerId: number;
@@ -26,7 +24,7 @@ export const UpdateCustomer = ({ customerId, setEditingCustomerId }: UpdateCusto
         postal_code: "",
         city: "",
         country: "",
-        created_at: "",
+        created_at: ""
     })
 
 
@@ -55,7 +53,7 @@ export const UpdateCustomer = ({ customerId, setEditingCustomerId }: UpdateCusto
         e.preventDefault();
         await updateCustomer(customerId, customer);
         dispatch({
-            type: ActionType.UPDATED,
+            type: CustomerActionType.UPDATED,
             payload: JSON.stringify(customer)
         })
         setEditingCustomerId(null);

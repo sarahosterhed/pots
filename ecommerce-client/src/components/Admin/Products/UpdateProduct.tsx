@@ -1,8 +1,8 @@
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { useProduct } from "../../hooks/useProducts";
-import { ActionType } from "../../reducers/CustomerReducer";
-import { Product } from "../../types/Product";
-import ProductContext from "../../contexts/ProductContext";
+import ProductContext from "../../../contexts/ProductContext";
+import { useProduct } from "../../../hooks/useProducts";
+import { Product } from "../../../types/Product";
+import { ProductActionType } from "../../../reducers/ProductReducer";
 
 
 interface IUpdateProductProps {
@@ -43,7 +43,7 @@ export const UpdateProduct = (props: IUpdateProductProps) => {
     props.setUpdateProductId(null);
   };
 
-  const handleChange = ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
 
     const { name, value } = e.target;
@@ -59,7 +59,7 @@ export const UpdateProduct = (props: IUpdateProductProps) => {
     if (!updatedProduct) return;
     await updateProductHandler(updatedProduct.id, updatedProduct);
     dispatch({
-      type: ActionType.UPDATED,
+      type: ProductActionType.UPDATED,
       payload: JSON.stringify(updatedProduct),
     });
     props.setUpdateProductId(null)

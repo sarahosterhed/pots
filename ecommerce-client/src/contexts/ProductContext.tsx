@@ -1,12 +1,11 @@
 import { createContext, Dispatch, PropsWithChildren, useEffect, useReducer } from 'react';
 import { Product } from "../types/Product"
-import { Action, ActionType } from '../reducers/CustomerReducer';
-import { ProductReducer } from '../reducers/ProductReducer';
+import { ProductAction, ProductActionType, ProductReducer } from '../reducers/ProductReducer';
 import { useProduct } from '../hooks/useProducts';
 
 export type ProductContextType = {
     products: Product[],
-    dispatch: Dispatch<Action>
+    dispatch: Dispatch<ProductAction>
 }
 
 
@@ -26,7 +25,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         const getData = async () => {
             const data = await fetchProductsHandler();
             dispatch({
-                type: ActionType.LOADED,
+                type: ProductActionType.LOADED,
                 payload: JSON.stringify(data),
             });
 

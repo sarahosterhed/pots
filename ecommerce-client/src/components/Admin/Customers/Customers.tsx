@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react"
-import { useCustomers } from "../../hooks/useCustomers";
-import { ActionType } from "../../reducers/CustomerReducer";
 import { CreateCustomer } from "./CreateCustomer";
 import { UpdateCustomer } from "./UpdateCustomer";
-import CustomerContext from "../../contexts/CustomerContext";
+import CustomerContext from "../../../contexts/CustomerContext";
+import { useCustomers } from "../../../hooks/useCustomers";
+import { CustomerActionType } from "../../../reducers/CustomerReducer";
 
 
 export const Customers = () => {
@@ -16,7 +16,7 @@ export const Customers = () => {
         const getData = async () => {
             const customersData = await fetchCustomersHandler();
             dispatch({
-                type: ActionType.LOADED,
+                type: CustomerActionType.LOADED,
                 payload: JSON.stringify(customersData)
             })
         }
@@ -26,7 +26,7 @@ export const Customers = () => {
     const handleDelete = async (id: number) => {
         await deleteCustomerHandler(id);
         dispatch({
-            type: ActionType.DELETED,
+            type: CustomerActionType.DELETED,
             payload: JSON.stringify(id)
         })
     }

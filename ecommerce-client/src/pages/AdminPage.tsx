@@ -1,9 +1,9 @@
-import { Products } from "../components/Products/Products"
-import { Customers } from "../components/Customers/Customers"
-import { Orders } from "../components/Orders/Orders"
 import { OrderProvider } from "../contexts/OrderContext"
 import { useState } from "react";
 import { CustomerProvider } from "../contexts/CustomerContext";
+import { Customers } from "../components/Admin/Customers/Customers";
+import { Orders } from "../components/Admin/Orders/Orders";
+import { Products } from "../components/Admin/Products/Products";
 
 type SubPage = "customers" | "products" | "orders";
 

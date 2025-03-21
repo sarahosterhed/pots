@@ -1,11 +1,11 @@
 import { createContext, Dispatch, PropsWithChildren, useReducer } from "react";
 import { Customer } from "../types/Customer";
-import { Action, CustomerReducer } from "../reducers/CustomerReducer";
+import { CustomerAction, CustomerReducer } from "../reducers/CustomerReducer";
 
 
 export type CustomerContextType = {
     customers: Customer[],
-    dispatch: Dispatch<Action>
+    dispatch: Dispatch<CustomerAction>
 }
 
 const CustomerContext = createContext<CustomerContextType>({

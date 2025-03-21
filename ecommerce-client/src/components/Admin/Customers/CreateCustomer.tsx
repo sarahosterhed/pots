@@ -1,9 +1,10 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react"
-import { useCustomers } from "../../hooks/useCustomers";
-import { ActionType } from "../../reducers/CustomerReducer";
-import { fetchCustomers } from "../../services/customerService";
-import { CustomerCreate } from "../../types/Customer";
-import CustomerContext from "../../contexts/CustomerContext";
+import CustomerContext from "../../../contexts/CustomerContext";
+import { useCustomers } from "../../../hooks/useCustomers";
+import { fetchCustomers } from "../../../services/customerService";
+import { CustomerCreate } from "../../../types/Customer";
+import { CustomerActionType } from "../../../reducers/CustomerReducer";
+
 
 
 export const CreateCustomer = () => {
@@ -35,7 +36,7 @@ export const CreateCustomer = () => {
         await createCustomerHandler(newCustomer);
         const updatedCustomers = await fetchCustomers();
         dispatch({
-            type: ActionType.LOADED,
+            type: CustomerActionType.LOADED,
             payload: JSON.stringify(updatedCustomers)
         })
 

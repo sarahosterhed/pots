@@ -23,6 +23,22 @@ export const fetchCustomerById = async (id: number): Promise<Customer> => {
     }
 }
 
+export const fetchCustomerByEmail = async (email: string): Promise<Customer | null> => {
+    try {
+        const response = await axios.get(CUSTOMER_URL + "email/" + email)
+        return response.data;
+    } catch (error) {
+        switch (error.status) {
+            case 404:
+                console.log("error 404, do nothing");
+                return null;
+            default:
+                console.log("other error than 404")
+                throw error;
+        }
+    }
+}
+
 export const createCustomer = async (payload: CustomerCreate): Promise<Customer> => {
     try {
         const response = await axios.post(CUSTOMER_URL, payload);

@@ -10,7 +10,7 @@ type ShowProductCardProps = {
 
 const ProductCard = ({ product }: ShowProductCardProps) => {
   const { id, name, description, price, stock, category, image } = product;
-  const { cart, cartDispatch } = useContext(CartContext);
+  const { cartDispatch } = useContext(CartContext);
 
   const handleAddToCart = (product: Product, quantity: number) => {
     console.log("payload = product:", product, "quantity:", quantity);
@@ -19,7 +19,6 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
       payload: { product, quantity },
     });
   };
-  console.log("Product cart", cart)
 
   return (
     <section className="product-card">

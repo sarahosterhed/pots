@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Customer, CustomerCreate } from "../types/Customer";
-import { createCustomer, deleteCustomer, fetchCustomerById, fetchCustomers, updateCustomer } from "../services/customerService";
+import { createCustomer, deleteCustomer, fetchCustomerByEmail, fetchCustomerById, fetchCustomers, updateCustomer } from "../services/customerService";
 
 export const useCustomers = () => {
   const [error, setError] = useState<string>("");
@@ -32,6 +32,19 @@ export const useCustomers = () => {
     }
   };
 
+  const fetchCustomerByEmailHandler = async (email: string) => {
+    setIsLoading(true);
+    try {
+      const data = await fetchCustomerByEmail(email);
+      return data;
+    } catch {
+      setError("Error fetching customer email");
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const deleteCustomerHandler = async (id: number) => {
     setIsLoading(true);
     try {
@@ -56,11 +69,11 @@ export const useCustomers = () => {
     }
   };
 
-
   const createCustomerHandler = async (payload: CustomerCreate) => {
     setIsLoading(true);
     try {
-      await createCustomer(payload);
+      const data = await createCustomer(payload);
+      return data;
     } catch (error) {
       setError("Error: Could not delete customer");
       throw error;
@@ -76,6 +89,7 @@ export const useCustomers = () => {
     deleteCustomerHandler,
     updateCustomerHandler,
     fetchCustomerByIdHandler,
+    fetchCustomerByEmailHandler,
     createCustomerHandler
   };
 };

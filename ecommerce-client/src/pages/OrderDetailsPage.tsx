@@ -73,7 +73,7 @@ export const OrderDetailsPage = () => {
     const handleIncrease = async (itemId: ItemIdType) => {
         setOrderDetails({
             ...orderDetails,
-            order_items: orderDetails.order_items.map((item) => (
+            order_items: order_items.map((item) => (
                 item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
             ))
         })
@@ -82,7 +82,7 @@ export const OrderDetailsPage = () => {
     const handleDecrease = async (itemId: ItemIdType) => {
         setOrderDetails({
             ...orderDetails,
-            order_items: orderDetails.order_items.map((item) => (
+            order_items: order_items.map((item) => (
                 item.id === itemId && item.quantity > 1
                     ? { ...item, quantity: item.quantity - 1 }
                     : item

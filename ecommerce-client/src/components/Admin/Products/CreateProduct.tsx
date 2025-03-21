@@ -1,9 +1,8 @@
 import { FormEvent, useContext, useState } from "react";
-
-import { useProduct } from "../../hooks/useProducts";
-import { ActionType } from "../../reducers/CustomerReducer";
-import { ProductCreate } from "../../types/Product";
-import ProductContext from "../../contexts/ProductContext";
+import ProductContext from "../../../contexts/ProductContext";
+import { useProduct } from "../../../hooks/useProducts";
+import { ProductCreate } from "../../../types/Product";
+import { ProductActionType } from "../../../reducers/ProductReducer";
 interface CreateProductProps {
   handleClose: () => void;
 }
@@ -31,7 +30,7 @@ export const CreateProduct = ({ handleClose }: CreateProductProps) => {
     const updatedProducts = await fetchProductsHandler();
     console.log(updatedProducts)
     dispatch({
-      type: ActionType.LOADED,
+      type: ProductActionType.LOADED,
       payload: JSON.stringify(updatedProducts)
     })
     handleClose()

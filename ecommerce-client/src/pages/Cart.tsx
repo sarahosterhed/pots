@@ -3,9 +3,11 @@ import { cartActionType } from "../reducers/CartReducer";
 import { CartItem } from "../types/CartItem";
 import CartContext from "../contexts/CartContext";
 import { Product } from "../types/Product";
+import { useNavigate } from "react-router";
 
 export const Cart = () => {
   const { cart, cartDispatch } = useContext(CartContext);
+  const navigate = useNavigate();
 
   const handleChangeQuantity = (product: Product, quantity: number) => {
     cartDispatch({
@@ -67,12 +69,15 @@ export const Cart = () => {
           </div>
         </div>
       ))}
-          <div className="cart-wrapper">
-            <h3>Bag total</h3>
-            {totalSum === 0 ? <p>Your bag is empty</p> : <h3>Total: {totalSum} kr</h3>}
+      <div className="cart-wrapper">
+        <h3>Bag total</h3>
+        {totalSum === 0 ? <p>Your bag is empty</p> : <h3>Total: {totalSum} kr</h3>}
 
-          </div>
+      </div>
       <button onClick={handleResetCart}>Reset Cart</button>
+      <div>
+        <button onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
+      </div>
     </div>
   );
 };

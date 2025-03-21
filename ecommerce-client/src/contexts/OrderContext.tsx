@@ -1,11 +1,10 @@
 import { Order } from '../types/Order';
 import { createContext, Dispatch, PropsWithChildren, useReducer } from 'react';
-import { Action } from '../reducers/OrderReducer';
-import { OrderReducer } from '../reducers/OrderReducer';
+import { OrderAction, OrderReducer } from '../reducers/OrderReducer';
 
 export type OrderContextType = {
     orders: Order[],
-    dispatch: Dispatch<Action>
+    dispatch: Dispatch<OrderAction>
 }
 
 const OrderContext = createContext<OrderContextType>({
