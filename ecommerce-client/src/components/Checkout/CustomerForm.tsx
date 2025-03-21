@@ -65,15 +65,15 @@ export const CustomerForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="text" name="firstname" onChange={(e) => handleChange(e)} value={customerInput.firstname} />
-            <input type="text" name="lastname" onChange={(e) => handleChange(e)} value={customerInput.lastname} />
-            <input type="email" name="email" onChange={(e) => handleChange(e)} value={customerInput.email} />
-            <input type="password" name="password" onChange={(e) => handleChange(e)} value={customerInput.password} />
-            <input type="tel" name="phone" onChange={(e) => handleChange(e)} value={customerInput.phone} />
-            <input type="text" name="street_address" onChange={(e) => handleChange(e)} value={customerInput.street_address} />
-            <input type="text" name="postal_code" pattern="[0-9]{5}" onChange={(e) => handleChange(e)} value={customerInput.postal_code} />
-            <input type="text" name="city" onChange={(e) => handleChange(e)} value={customerInput.city} />
-            <input type="text" name="country" onChange={(e) => handleChange(e)} value={customerInput.country} />
+            <input type="text" name="firstname" placeholder="First Name" onChange={(e) => handleChange(e)} value={customerInput.firstname} />
+            <input type="text" name="lastname" placeholder="Last Name" onChange={(e) => handleChange(e)} value={customerInput.lastname} />
+            <input type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} value={customerInput.email} />
+            <input type="password" name="password" placeholder="Password" onChange={(e) => handleChange(e)} value={customerInput.password} />
+            <input type="tel" name="phone" placeholder="Phone Number" onChange={(e) => handleChange(e)} value={customerInput.phone} />
+            <input type="text" name="street_address" placeholder="Street Address" onChange={(e) => handleChange(e)} value={customerInput.street_address} />
+            <input type="text" name="postal_code" placeholder="Postal Code" pattern="[0-9]{5}" onChange={(e) => handleChange(e)} value={customerInput.postal_code} />
+            <input type="text" name="city" placeholder="City" onChange={(e) => handleChange(e)} value={customerInput.city} />
+            <input type="text" name="country" placeholder="Country" onChange={(e) => handleChange(e)} value={customerInput.country} />
 
             <button type="submit">Go to payment</button>
         </form>
