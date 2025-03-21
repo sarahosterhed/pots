@@ -3,7 +3,7 @@ import { OrderDetails } from "../types/Order";
 import { useNavigate, useParams } from "react-router";
 import { useOrders } from "../hooks/useOrders";
 import OrderContext from "../contexts/OrderContext";
-import { ActionType } from "../reducers/OrderReducer";
+import { OrderActionType } from "../reducers/OrderReducer";
 
 type ItemIdType = number | null;
 
@@ -107,7 +107,7 @@ export const OrderDetailsPage = () => {
         if (!id) return;
         await deleteOrderHandler(id);
         dispatch({
-            type: ActionType.ORDER_DELETED,
+            type: OrderActionType.ORDER_DELETED,
             payload: JSON.stringify(id),
         });
         navigate("/admin")

@@ -1,17 +1,19 @@
 import { createOrder, deleteOrderItem, updateOrderItem } from "../services/orderService";
 import { updateOrder } from "../services/orderService";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   deleteOrder,
   fetchOrderById,
   fetchOrders,
 } from "../services/orderService";
-import { OrderCreate, OrderUpdate } from "../types/Order";
+import { OrderCreate, OrderItem, OrderUpdate } from "../types/Order";
 import { OrderItemUpdate } from "../types/Order";
+import CartContext from "../contexts/CartContext";
 
 export const useOrders = () => {
   const [error, setError] = useState<string>("");
   const [loading, setIsLoading] = useState<boolean>(false);
+  const { cart } = useContext(CartContext)
 
   const fetchOrdersHandler = async () => {
     setIsLoading(true);
@@ -77,6 +79,24 @@ export const useOrders = () => {
     }
   };
 
+  const prepareOrderHandler = (customerId: number): OrderCreate => {
+    const orderItems: OrderItem[] = cart.map(({ product, quantity }) => ({
+      id: customerId,
+      product_id: product.id,
+      product_name: product.name,
+      quantity: quantity,
+      unit_price: product.price
+    }));
+
+    return {
+      customer_id: customerId,
+      payment_status: "Unpaid",
+      payment_id: "",
+      order_status: "Pending",
+      order_items: orderItems
+    }
+  }
+
   const updateOrderItemHandler = async (id: number, payload: OrderItemUpdate) => {
     setIsLoading(true);
     try {
@@ -110,6 +130,7 @@ export const useOrders = () => {
     deleteOrderHandler,
     updateOrderHandler,
     createOrderHandler,
+    prepareOrderHandler,
     updateOrderItemHandler,
     deleteOrderItemHandler
   };

@@ -7,12 +7,12 @@ export type CheckoutContextType = {
 }
 
 const CheckoutContext = createContext<CheckoutContextType>({
-    checkoutStage: 0,
+    checkoutStage: 1,
     dispatch: () => { }
 })
 
 export const CheckoutProvider = ({ children }: PropsWithChildren) => {
-    const [checkoutStage, dispatch] = useReducer(CheckoutReducer, 0)
+    const [checkoutStage, dispatch] = useReducer(CheckoutReducer, 1)
 
     return (
         <CheckoutContext.Provider value={{ checkoutStage, dispatch }}>

@@ -7,6 +7,7 @@ import { AdminPage } from "./pages/AdminPage";
 import { Cart } from "./pages/Cart";
 import { OrderDetailsPage } from "./pages/OrderDetailsPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
+import { CheckoutProvider } from "./contexts/CheckoutContext";
 
 
 export const router = createBrowserRouter([
@@ -37,7 +38,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/checkout",
-                element: <CheckoutPage />
+                element: (
+                    <CheckoutProvider>
+                        <CheckoutPage />
+                    </CheckoutProvider>
+                )
             }
         ]
 

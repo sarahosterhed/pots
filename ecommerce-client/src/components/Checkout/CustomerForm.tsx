@@ -1,12 +1,14 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 import { Customer } from "../../types/Customer";
 import { useCustomers } from "../../hooks/useCustomers";
-import { OrderCreate } from "../../types/Order";
-import CartContext from "../../contexts/CartContext";
-import { fetchCustomerByEmail } from "../../services/customerService";
+import CheckoutContext from "../../contexts/CheckoutContext";
+import { CheckoutActionType } from "../../reducers/CheckoutReducer";
+import { useOrders } from "../../hooks/useOrders";
+import { getFromLocalStorage, saveTolocalStorage } from "../../utils/localStorageUtils";
 
 export const CustomerForm = () => {
-    const [customerInput, setCustomerInput] = useState<Customer>({
+    const storedCustomerInput = getFromLocalStorage('customerInput');
+    const [customerInput, setCustomerInput] = useState<Customer>(storedCustomerInput || {
         id: 0,
         firstname: "",
         lastname: "",
@@ -19,16 +21,13 @@ export const CustomerForm = () => {
         country: "",
         created_at: ""
     });
-    const [order, setOrder] = useState<OrderCreate>({
-        customer_id: 0,
-        payment_status: "",
-        payment_id: "",
-        order_status: "",
-        order_items: []
-    });
-    const { cart, cartQuantity } = useContext(CartContext)
-
+    const { dispatch } = useContext(CheckoutContext)
     const { fetchCustomerByEmailHandler, createCustomerHandler } = useCustomers();
+    const { createOrderHandler, prepareOrderHandler } = useOrders();
+
+    useEffect(() => {
+        saveTolocalStorage("customerInput", customerInput);
+    }, [customerInput]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { type, name, value } = e.target;
@@ -43,25 +42,25 @@ export const CustomerForm = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const customer = await fetchCustomerByEmail(customerInput.email);
+        const customer = await fetchCustomerByEmailHandler(customerInput.email);
 
         if (customer !== null) {
-            console.log("customer found", customer.id)
-            setOrder({
-                ...order,
-                customer_id: customer.id,
-                payment_status: "Unpaid",
-                payment_id: "",
-                order_status: "Pending",
-                // order_items:
-            })
-            console.log(order)
+            const { id } = customer;
+            const newOrder = prepareOrderHandler(id);
+            const orderResponse = await createOrderHandler(newOrder);
+            console.log("create order response", orderResponse)
         } else {
-            const response = await createCustomerHandler(customerInput);
-            console.log("response", response)
-
+            const { id } = await createCustomerHandler(customerInput);
+            const newOrder = prepareOrderHandler(id)
+            const orderResponse = await createOrderHandler(newOrder);
+            console.log("create order response", orderResponse)
         }
 
+        dispatch({
+            type: CheckoutActionType.CHANGE_STAGE,
+            payload: 2
+        })
+        localStorage.removeItem('customerInput');
     }
 
     return (
