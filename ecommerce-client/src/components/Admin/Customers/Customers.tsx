@@ -8,14 +8,14 @@ import { CustomerActionType } from "../../../reducers/CustomerReducer";
 
 export const Customers = () => {
     const { fetchCustomersHandler, deleteCustomerHandler } = useCustomers()
-    const { customers, dispatch } = useContext(CustomerContext)
+    const { customers, customerDispatch } = useContext(CustomerContext)
     const [editingCustomerId, setEditingCustomerId] = useState<number | null>(null);
 
     useEffect(() => {
         if (customers.length > 0) return;
         const getData = async () => {
             const customersData = await fetchCustomersHandler();
-            dispatch({
+            customerDispatch({
                 type: CustomerActionType.LOADED,
                 payload: JSON.stringify(customersData)
             })
@@ -25,7 +25,7 @@ export const Customers = () => {
 
     const handleDelete = async (id: number) => {
         await deleteCustomerHandler(id);
-        dispatch({
+        customerDispatch({
             type: CustomerActionType.DELETED,
             payload: JSON.stringify(id)
         })

@@ -5,20 +5,20 @@ import { CustomerAction, CustomerReducer } from "../reducers/CustomerReducer";
 
 export type CustomerContextType = {
     customers: Customer[],
-    dispatch: Dispatch<CustomerAction>
+    customerDispatch: Dispatch<CustomerAction>
 }
 
 const CustomerContext = createContext<CustomerContextType>({
     customers: [],
-    dispatch: () => { }
+    customerDispatch: () => { }
 })
 
 
 export const CustomerProvider = ({ children }: PropsWithChildren) => {
-    const [customers, dispatch] = useReducer(CustomerReducer, [])
+    const [customers, customerDispatch] = useReducer(CustomerReducer, [])
 
     return (
-        <CustomerContext.Provider value={{ customers, dispatch }}>
+        <CustomerContext.Provider value={{ customers, customerDispatch }}>
             {children}
         </CustomerContext.Provider>
     )

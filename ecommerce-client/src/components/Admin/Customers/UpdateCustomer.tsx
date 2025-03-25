@@ -12,7 +12,7 @@ type UpdateCustomerProps = {
 
 export const UpdateCustomer = ({ customerId, setEditingCustomerId }: UpdateCustomerProps) => {
     const { fetchCustomerByIdHandler } = useCustomers()
-    const { dispatch } = useContext(CustomerContext);
+    const { customerDispatch } = useContext(CustomerContext);
     const [customer, setCustomer] = useState<Customer>({
         id: 0,
         firstname: "",
@@ -52,7 +52,7 @@ export const UpdateCustomer = ({ customerId, setEditingCustomerId }: UpdateCusto
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         await updateCustomer(customerId, customer);
-        dispatch({
+        customerDispatch({
             type: CustomerActionType.UPDATED,
             payload: JSON.stringify(customer)
         })

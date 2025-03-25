@@ -8,6 +8,7 @@ import { Cart } from "./pages/Cart";
 import { OrderDetailsPage } from "./pages/OrderDetailsPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { CheckoutProvider } from "./contexts/CheckoutContext";
+import { OrderConfirmation } from "./pages/OrderConfirmation";
 
 
 export const router = createBrowserRouter([
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
                         <CheckoutPage />
                     </CheckoutProvider>
                 )
+            },
+            {
+                path: "/order-confirmation",
+                element: <OrderConfirmation />
             }
         ]
 

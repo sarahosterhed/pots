@@ -24,9 +24,6 @@ export const CheckoutPage = () => {
                     <CustomerForm />
                 }
                 {checkoutStage === 2 &&
-                    <p>teststage 2</p>
-                }
-                {checkoutStage === 3 &&
                     <OrderConfirmation />
                 }
             </section>

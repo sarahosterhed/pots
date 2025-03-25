@@ -3,19 +3,19 @@ import { CheckoutAction, CheckoutReducer } from "../reducers/CheckoutReducer";
 
 export type CheckoutContextType = {
     checkoutStage: number;
-    dispatch: Dispatch<CheckoutAction>
+    checkoutDispatch: Dispatch<CheckoutAction>
 }
 
 const CheckoutContext = createContext<CheckoutContextType>({
     checkoutStage: 1,
-    dispatch: () => { }
+    checkoutDispatch: () => { }
 })
 
 export const CheckoutProvider = ({ children }: PropsWithChildren) => {
-    const [checkoutStage, dispatch] = useReducer(CheckoutReducer, 1)
+    const [checkoutStage, checkoutDispatch] = useReducer(CheckoutReducer, 1)
 
     return (
-        <CheckoutContext.Provider value={{ checkoutStage, dispatch }}>
+        <CheckoutContext.Provider value={{ checkoutStage, checkoutDispatch }}>
             {children}
         </CheckoutContext.Provider>
     )

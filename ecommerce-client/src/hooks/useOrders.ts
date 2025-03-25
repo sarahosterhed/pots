@@ -1,4 +1,4 @@
-import { createOrder, deleteOrderItem, updateOrderItem } from "../services/orderService";
+import { createOrder, deleteOrderItem, fetchOrderByPaymentId, updateOrderItem } from "../services/orderService";
 import { updateOrder } from "../services/orderService";
 import { useContext, useState } from "react";
 import {
@@ -6,7 +6,7 @@ import {
   fetchOrderById,
   fetchOrders,
 } from "../services/orderService";
-import { OrderCreate, OrderItem, OrderUpdate } from "../types/Order";
+import { OrderCreate, OrderDetails, OrderItem, OrderUpdate } from "../types/Order";
 import { OrderItemUpdate } from "../types/Order";
 import CartContext from "../contexts/CartContext";
 
@@ -41,6 +41,19 @@ export const useOrders = () => {
     }
   };
 
+  const fetchOrderByPaymentIdHandler = async (paymentId: string): Promise<OrderDetails> => {
+    setIsLoading(true);
+    try {
+      const data = await fetchOrderByPaymentId(paymentId);
+      return data;
+    } catch (error) {
+      setError("Error: Failed to get order");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const deleteOrderHandler = async (id: number) => {
     setIsLoading(true);
     try {
@@ -65,6 +78,7 @@ export const useOrders = () => {
       setIsLoading(false);
     }
   };
+
 
   const createOrderHandler = async (payload: OrderCreate) => {
     setIsLoading(true);
@@ -127,6 +141,7 @@ export const useOrders = () => {
     loading,
     fetchOrdersHandler,
     fetchOrderByIdHandler,
+    fetchOrderByPaymentIdHandler,
     deleteOrderHandler,
     updateOrderHandler,
     createOrderHandler,

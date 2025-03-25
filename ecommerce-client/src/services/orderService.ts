@@ -25,6 +25,17 @@ export const fetchOrderById = async (id: number): Promise<OrderDetails> => {
   }
 };
 
+export const fetchOrderByPaymentId = async (paymentId: string): Promise<OrderDetails> => {
+  try {
+    const response = await axios.get(`${ORDER_URL}/payment/${paymentId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+
+}
+
 export const deleteOrder = async (id: number): Promise<void> => {
   try {
     await axios.delete(`${ORDER_URL}/${id}`);
@@ -47,7 +58,7 @@ export const updateOrder = async (
   }
 };
 
-export const createOrder = async (payload: OrderCreate): Promise<Order> => {
+export const createOrder = async (payload: OrderCreate) => {
   try {
     const response = await axios.post(`${ORDER_URL}`, payload);
     return response.data;

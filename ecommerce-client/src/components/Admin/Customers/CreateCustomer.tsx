@@ -9,7 +9,7 @@ import { CustomerActionType } from "../../../reducers/CustomerReducer";
 
 export const CreateCustomer = () => {
     const { createCustomerHandler } = useCustomers();
-    const { dispatch } = useContext(CustomerContext);
+    const { customerDispatch } = useContext(CustomerContext);
     const [newCustomer, setNewCustomer] = useState<CustomerCreate>({
         firstname: "",
         lastname: "",
@@ -35,7 +35,7 @@ export const CreateCustomer = () => {
         e.preventDefault();
         await createCustomerHandler(newCustomer);
         const updatedCustomers = await fetchCustomers();
-        dispatch({
+        customerDispatch({
             type: CustomerActionType.LOADED,
             payload: JSON.stringify(updatedCustomers)
         })

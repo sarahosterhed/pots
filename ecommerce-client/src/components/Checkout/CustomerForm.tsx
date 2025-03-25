@@ -1,10 +1,9 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { Customer } from "../../types/Customer";
 import { useCustomers } from "../../hooks/useCustomers";
-import CheckoutContext from "../../contexts/CheckoutContext";
-import { CheckoutActionType } from "../../reducers/CheckoutReducer";
 import { useOrders } from "../../hooks/useOrders";
 import { getFromLocalStorage, saveTolocalStorage } from "../../utils/localStorageUtils";
+import { useCheckout } from "../../hooks/useCheckout";
 
 export const CustomerForm = () => {
     const storedCustomerInput = getFromLocalStorage('customerInput');
@@ -21,9 +20,9 @@ export const CustomerForm = () => {
         country: "",
         created_at: ""
     });
-    const { dispatch } = useContext(CheckoutContext)
     const { fetchCustomerByEmailHandler, createCustomerHandler } = useCustomers();
-    const { createOrderHandler, prepareOrderHandler } = useOrders();
+    const { createOrderHandler, prepareOrderHandler, updateOrderHandler } = useOrders();
+    const { createCheckoutHandler, prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
 
     useEffect(() => {
         saveTolocalStorage("customerInput", customerInput);
@@ -36,31 +35,40 @@ export const CustomerForm = () => {
         } else {
             setCustomerInput({ ...customerInput, [name]: +value })
         }
-        console.log("Customer Input", customerInput)
     }
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        const customer = await fetchCustomerByEmailHandler(customerInput.email);
+        try {
+            let customer = await fetchCustomerByEmailHandler(customerInput.email);
+            if (!customer) {
+                customer = await createCustomerHandler(customerInput);
+            }
 
-        if (customer !== null) {
             const { id } = customer;
             const newOrder = prepareOrderHandler(id);
             const orderResponse = await createOrderHandler(newOrder);
-            console.log("create order response", orderResponse)
-        } else {
-            const { id } = await createCustomerHandler(customerInput);
-            const newOrder = prepareOrderHandler(id)
-            const orderResponse = await createOrderHandler(newOrder);
-            console.log("create order response", orderResponse)
-        }
+            const orderId: number = orderResponse.id;
 
-        dispatch({
-            type: CheckoutActionType.CHANGE_STAGE,
-            payload: 2
-        })
-        localStorage.removeItem('customerInput');
+            const checkoutPayload = prepareCheckoutPayloadHandler(newOrder);
+            const { checkoutUrl, sessionId } = await createCheckoutHandler(checkoutPayload);
+
+            saveTolocalStorage("paymentId", sessionId)
+            window.location.href = checkoutUrl;
+
+            await updateOrderHandler(orderId, {
+                "payment_status": "paid",
+                "payment_id": sessionId,
+                "order_status": "Recieved"
+            });
+
+            checkoutCleanupHandler();
+
+        } catch (error) {
+            console.error("Checkout process failed:", error);
+            alert("Something went wrong. Please try again.");
+        }
     }
 
     return (
