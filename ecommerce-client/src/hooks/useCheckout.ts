@@ -3,15 +3,12 @@ import { createCheckoutSession } from "../services/checkoutService";
 import { CheckoutCurrency, CheckoutLineItem, CheckoutPayload } from "../types/Checkout";
 import { OrderCreate } from "../types/Order";
 import CartContext from "../contexts/CartContext";
-import CheckoutContext from "../contexts/CheckoutContext";
 import { cartActionType } from "../reducers/CartReducer";
-import { CheckoutActionType } from "../reducers/CheckoutReducer";
 
 export const useCheckout = () => {
     const [error, setError] = useState<string>("");
     const [loading, setIsLoading] = useState<boolean>(false);
     const { cartDispatch } = useContext(CartContext)
-    const { checkoutDispatch } = useContext(CheckoutContext)
 
     const createCheckoutHandler = async (payload: CheckoutPayload) => {
         setIsLoading(true);
@@ -49,11 +46,6 @@ export const useCheckout = () => {
     }
 
     const checkoutCleanupHandler = () => {
-        checkoutDispatch({
-            type: CheckoutActionType.CHANGE_STAGE,
-            payload: 2
-        })
-
         cartDispatch({
             type: cartActionType.RESET_CART,
             payload: null

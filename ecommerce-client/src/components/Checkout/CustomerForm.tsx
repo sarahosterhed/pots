@@ -1,9 +1,11 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 import { Customer } from "../../types/Customer";
 import { useCustomers } from "../../hooks/useCustomers";
 import { useOrders } from "../../hooks/useOrders";
 import { getFromLocalStorage, saveTolocalStorage } from "../../utils/localStorageUtils";
 import { useCheckout } from "../../hooks/useCheckout";
+import CheckoutContext from "../../contexts/CheckoutContext";
+import { CheckoutActionType } from "../../reducers/CheckoutReducer";
 
 export const CustomerForm = () => {
     const storedCustomerInput = getFromLocalStorage('customerInput');
@@ -21,6 +23,7 @@ export const CustomerForm = () => {
         created_at: ""
     });
     const { fetchCustomerByEmailHandler, createCustomerHandler } = useCustomers();
+    const { checkoutDispatch } = useContext(CheckoutContext)
     const { createOrderHandler, prepareOrderHandler, updateOrderHandler } = useOrders();
     const { createCheckoutHandler, prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
 
@@ -52,18 +55,21 @@ export const CustomerForm = () => {
             const orderId: number = orderResponse.id;
 
             const checkoutPayload = prepareCheckoutPayloadHandler(newOrder);
-            const { checkoutUrl, sessionId } = await createCheckoutHandler(checkoutPayload);
+            // const { checkoutUrl, sessionId } = await createCheckoutHandler(checkoutPayload);
 
-            saveTolocalStorage("paymentId", sessionId)
-            window.location.href = checkoutUrl;
+            // saveTolocalStorage("paymentId", sessionId)
+            // window.location.href = checkoutUrl;
 
-            await updateOrderHandler(orderId, {
-                "payment_status": "paid",
-                "payment_id": sessionId,
-                "order_status": "Recieved"
-            });
+            // await updateOrderHandler(orderId, {
+            //     "payment_status": "paid",
+            //     "payment_id": sessionId,
+            //     "order_status": "Recieved"
+            // });
 
-            checkoutCleanupHandler();
+            checkoutDispatch({
+                type: CheckoutActionType.CHANGE_STAGE,
+                payload: 2
+            })
 
         } catch (error) {
             console.error("Checkout process failed:", error);
