@@ -17,6 +17,7 @@
     "stripe": "^17.7.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "typescript": "^5.8.2"
   }
