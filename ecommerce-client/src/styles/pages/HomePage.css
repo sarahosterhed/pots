@@ -1,0 +1,35 @@
+.products-wrapper {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+.product-card {
+    width: 250px;
+    border: plum solid 1px;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s;
+  
+    h2 {
+      color: white;
+    }
+  }
+  
+  .product-card:hover {
+    transform: scale(1.015);
+    border-color: #535bf2;
+  }
+  
+  .product-image {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    width: 282px;
+    max-height: 240px;
+    object-fit: cover;
+    object-position: top;
+  
+  }

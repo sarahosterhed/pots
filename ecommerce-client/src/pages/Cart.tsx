@@ -43,19 +43,19 @@ export const Cart = () => {
             <button
               onClick={() =>
                 cartItem.product.id !== null &&
-                handleChangeQuantity(cartItem.product, 1)
+                handleChangeQuantity(cartItem.product, -1)
               }
             >
-              +
+              -
             </button>
             <p>x {cartItem.quantity}</p>
             <button
               onClick={() =>
                 cartItem.product.id !== null &&
-                handleChangeQuantity(cartItem.product, -1)
+                handleChangeQuantity(cartItem.product, 1)
               }
             >
-              -
+              +
             </button>
             <p>{cartItem.product.price} sek</p>
             <button

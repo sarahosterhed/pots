@@ -6,6 +6,18 @@ export const useCustomers = () => {
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const validateCustomerInput = (customer: CustomerCreate): string | null => {
+    if (!customer.firstname.trim()) return "First name is required.";
+    if (!customer.lastname.trim()) return "Last name is required.";
+    if (!customer.email.includes("@")) return "Invalid email address.";
+    if (!String(customer.phone).trim()) return "Phone number is required.";
+    if (!customer.street_address.trim()) return "Street address is required.";
+    if (!customer.postal_code.match(/^\d{5}$/)) return "Postal code is required.";
+    if (!customer.city.trim()) return "City is required.";
+    if (!customer.country.trim()) return "Country is required.";
+    return null;
+  };
+
   const fetchCustomersHandler = async () => {
     setIsLoading(true);
     try {
@@ -71,6 +83,14 @@ export const useCustomers = () => {
 
   const createCustomerHandler = async (payload: CustomerCreate) => {
     setIsLoading(true);
+
+    const validationError = validateCustomerInput(payload);
+    if (validationError) {
+      setError(validationError);
+      setIsLoading(false);
+      return null;
+    }
+
     try {
       const data = await createCustomer(payload);
       return data;

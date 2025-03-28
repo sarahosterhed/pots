@@ -12,7 +12,7 @@ import CartContext from "../contexts/CartContext";
 
 export const useOrders = () => {
   const [error, setError] = useState<string>("");
-  const [loading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { cart } = useContext(CartContext)
 
   const fetchOrdersHandler = async () => {
@@ -138,7 +138,7 @@ export const useOrders = () => {
 
   return {
     error,
-    loading,
+    isLoading,
     fetchOrdersHandler,
     fetchOrderByIdHandler,
     fetchOrderByPaymentIdHandler,

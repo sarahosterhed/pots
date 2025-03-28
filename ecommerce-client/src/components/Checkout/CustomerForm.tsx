@@ -6,6 +6,7 @@ import { getFromLocalStorage, saveTolocalStorage } from "../../utils/localStorag
 import { useCheckout } from "../../hooks/useCheckout";
 import CheckoutContext from "../../contexts/CheckoutContext";
 import { CheckoutActionType } from "../../reducers/CheckoutReducer";
+import { getClientSecret } from "../../services/checkoutService";
 
 export const CustomerForm = () => {
     const storedCustomerInput = getFromLocalStorage('customerInput');
@@ -22,22 +23,18 @@ export const CustomerForm = () => {
         country: "",
         created_at: ""
     });
-    const { fetchCustomerByEmailHandler, createCustomerHandler } = useCustomers();
+    const { fetchCustomerByEmailHandler, createCustomerHandler, error } = useCustomers();
     const { checkoutDispatch } = useContext(CheckoutContext)
-    const { createOrderHandler, prepareOrderHandler, updateOrderHandler } = useOrders();
-    const { createCheckoutHandler, prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
+    const { createOrderHandler, prepareOrderHandler } = useOrders();
+    const { prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
 
     useEffect(() => {
         saveTolocalStorage("customerInput", customerInput);
     }, [customerInput]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { type, name, value } = e.target;
-        if (type !== "tel") {
-            setCustomerInput({ ...customerInput, [name]: value })
-        } else {
-            setCustomerInput({ ...customerInput, [name]: +value })
-        }
+        const { name, value } = e.target;
+        setCustomerInput({ ...customerInput, [name]: value });
     }
 
     const handleSubmit = async (e: FormEvent) => {
@@ -47,29 +44,29 @@ export const CustomerForm = () => {
             let customer = await fetchCustomerByEmailHandler(customerInput.email);
             if (!customer) {
                 customer = await createCustomerHandler(customerInput);
+                if (!customer) return;
+            }
+
+            if (!customer) {
+                console.error("Customer creation failed due to validation errors.");
+                return;
             }
 
             const { id } = customer;
             const newOrder = prepareOrderHandler(id);
             const orderResponse = await createOrderHandler(newOrder);
             const orderId: number = orderResponse.id;
+            const checkoutPayload = prepareCheckoutPayloadHandler(orderId, newOrder);
+            const clientSecret = await getClientSecret(checkoutPayload);
 
-            const checkoutPayload = prepareCheckoutPayloadHandler(newOrder);
-            // const { checkoutUrl, sessionId } = await createCheckoutHandler(checkoutPayload);
-
-            // saveTolocalStorage("paymentId", sessionId)
-            // window.location.href = checkoutUrl;
-
-            // await updateOrderHandler(orderId, {
-            //     "payment_status": "paid",
-            //     "payment_id": sessionId,
-            //     "order_status": "Recieved"
-            // });
+            saveTolocalStorage("orderId", orderId);
+            saveTolocalStorage("clientSecret", clientSecret);
 
             checkoutDispatch({
                 type: CheckoutActionType.CHANGE_STAGE,
                 payload: 2
-            })
+            });
+            checkoutCleanupHandler();
 
         } catch (error) {
             console.error("Checkout process failed:", error);
@@ -88,6 +85,9 @@ export const CustomerForm = () => {
             <input type="text" name="postal_code" placeholder="Postal Code" pattern="[0-9]{5}" onChange={(e) => handleChange(e)} value={customerInput.postal_code} />
             <input type="text" name="city" placeholder="City" onChange={(e) => handleChange(e)} value={customerInput.city} />
             <input type="text" name="country" placeholder="Country" onChange={(e) => handleChange(e)} value={customerInput.country} />
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+
 
             <button type="submit">Go to payment</button>
         </form>

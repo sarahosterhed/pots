@@ -3,10 +3,11 @@ import { Link } from "react-router";
 import OrderContext from "../../../contexts/OrderContext";
 import { useOrders } from "../../../hooks/useOrders";
 import { OrderActionType } from "../../../reducers/OrderReducer";
+import { BeatLoader } from "react-spinners";
 
 export const Orders = () => {
   const { orders, dispatch } = useContext(OrderContext)
-  const { fetchOrdersHandler } = useOrders();
+  const { fetchOrdersHandler, isLoading } = useOrders();
 
   useEffect(() => {
     const getData = async () => {
@@ -22,19 +23,25 @@ export const Orders = () => {
   });
 
   return (
-    <div className="order-container">
-      {orders.map((order) => (
-        <Link to={`/admin/order/${order.id}`} key={order.id}>
-          <div className="order-card">
-            <p>Order ID: {order.id}</p>
-            <p>Order Status: {order.order_status}</p>
-            <p>Payment ID: {order.payment_id}</p>
-            <p>Payment Status: {order.payment_status}</p>
-            <p>Created at: {order.created_at}</p>
-            <p>Total Price: {order.total_price} :-</p>
-          </div>
-        </Link>
-      ))}
-    </div>
+    <>
+      <h2>Manage Orders</h2>
+      {isLoading &&
+        <BeatLoader />
+      }
+      <section className="wrapper">
+        {orders.map((order) => (
+          <Link to={`/admin/order/${order.id}`} key={order.id}>
+            <div className="card">
+              <p><span>Order ID:</span> <span>{order.id}</span></p>
+              <p><span>Order Status:</span> <span>{order.order_status}</span></p>
+              <p className="two-lines"><span>Payment ID:</span> <span>{order.payment_id}</span></p>
+              <p><span>Payment Status:</span> <span>{order.payment_status}</span></p>
+              <p className="two-lines"><span>Created at:</span> <span>{order.created_at}</span></p>
+              <p><span>Total Price:</span> <span>{order.total_price} :-</span></p>
+            </div>
+          </Link>
+        ))}
+      </section>
+    </>
   );
 };

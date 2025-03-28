@@ -8,12 +8,10 @@ export type ProductContextType = {
     dispatch: Dispatch<ProductAction>
 }
 
-
 const ProductContext = createContext<ProductContextType>({
     products: [],
     dispatch: () => { }
 });
-
 
 export const ProductProvider = ({ children }: PropsWithChildren) => {
     const [products, dispatch] = useReducer(ProductReducer, []);

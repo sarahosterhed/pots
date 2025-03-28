@@ -1,32 +1,14 @@
-import { useContext, useState } from "react";
-import { createCheckoutSession } from "../services/checkoutService";
-import { CheckoutCurrency, CheckoutLineItem, CheckoutPayload } from "../types/Checkout";
+import { useContext } from "react";
+import { CheckoutCurrency, CheckoutLineItem, CheckoutPayload, OrderedProduct } from "../types/Checkout";
 import { OrderCreate } from "../types/Order";
 import CartContext from "../contexts/CartContext";
 import { cartActionType } from "../reducers/CartReducer";
 
 export const useCheckout = () => {
-    const [error, setError] = useState<string>("");
-    const [loading, setIsLoading] = useState<boolean>(false);
     const { cartDispatch } = useContext(CartContext)
 
-    const createCheckoutHandler = async (payload: CheckoutPayload) => {
-        setIsLoading(true);
-        try {
-            const data = await createCheckoutSession(payload);
-            console.log("usehook", data)
-            return data;
-        } catch (error) {
-            setError("Error: Could not proceed to checkout");
-            throw error;
-        } finally {
-            setIsLoading(false);
-        }
-
-    };
-
-    const prepareCheckoutPayloadHandler = ({ customer_id, order_items }: OrderCreate): CheckoutPayload => {
-        const lineItems: CheckoutLineItem[] = order_items.map(({ product_name, quantity, unit_price }) => ({
+    const prepareCheckoutPayloadHandler = (orderId: number, order: OrderCreate): CheckoutPayload => {
+        const lineItems: CheckoutLineItem[] = order.order_items.map(({ product_name, quantity, unit_price }) => ({
             price_data: {
                 currency: CheckoutCurrency.SEK,
                 product_data: {
@@ -37,9 +19,15 @@ export const useCheckout = () => {
             quantity: quantity
         }));
 
+        const orderedProducts: OrderedProduct[] = order.order_items.map(({ product_id, quantity }) => ({
+            product_id: product_id,
+            quantity: quantity
+        }));
+
         const checkoutPayload: CheckoutPayload = {
             lineItems: lineItems,
-            clientReferenceId: customer_id
+            orderId: orderId,
+            orderedProducts: orderedProducts
         }
 
         return checkoutPayload;
@@ -55,9 +43,6 @@ export const useCheckout = () => {
     }
 
     return {
-        error,
-        loading,
-        createCheckoutHandler,
         prepareCheckoutPayloadHandler,
         checkoutCleanupHandler
     };

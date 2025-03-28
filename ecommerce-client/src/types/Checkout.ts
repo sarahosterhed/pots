@@ -1,6 +1,7 @@
 export type CheckoutPayload = {
     lineItems: CheckoutLineItem[];
-    clientReferenceId: number;
+    orderId: number;
+    orderedProducts: OrderedProduct[]
 }
 
 export type CheckoutLineItem = {
@@ -21,4 +22,9 @@ export enum CheckoutCurrency {
 
 export type CheckoutProductData = {
     name: string;
+}
+
+export type OrderedProduct = {
+    product_id: number;
+    quantity: number;
 }

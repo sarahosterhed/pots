@@ -25,7 +25,7 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
       <div>
         <Link to={`/product/${id}`}>
           <h2>{name}</h2>
-          <img className="product-image" src={image} alt={name} width="282" />
+          <img className="product-image" src={image} alt={name} />
         </Link>
         <p>{description}</p>
         <p>

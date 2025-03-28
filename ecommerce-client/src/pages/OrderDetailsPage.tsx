@@ -149,7 +149,7 @@ export const OrderDetailsPage = () => {
                 </div>
                 <div className="flex">
                     <section className="order-payment-wrapper">
-                        <p>{payment_id}</p>
+                        <p><b>Payment ID:</b> {payment_id}</p>
                         {selectedEditSection === "payment"
                             ? (
                                 <form onSubmit={handleSubmit}>

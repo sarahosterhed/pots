@@ -1,3 +1,4 @@
+import { BeatLoader } from "react-spinners";
 import ProductContext from "../../../contexts/ProductContext";
 import { useProduct } from "../../../hooks/useProducts";
 import { ProductActionType } from "../../../reducers/ProductReducer";
@@ -6,7 +7,7 @@ import { UpdateProduct } from "./UpdateProduct";
 import { useContext, useState } from "react";
 
 export const Products = () => {
-  const { deleteProductHandler } = useProduct();
+  const { deleteProductHandler, isLoading } = useProduct();
   const { products, dispatch } = useContext(ProductContext);
   const [updateProductId, setUpdateProductId] = useState<number | null>(null);
   const [openCreate, setOpenCreate] = useState<boolean>(false);
@@ -31,14 +32,17 @@ export const Products = () => {
   };
 
   return (
-    <div>
+    <>
+      {isLoading &&
+        <BeatLoader />
+      }
+      <h2>Manage Products</h2>
       {openCreate ? (
         <CreateProduct handleClose={() => setOpenCreate(false)} />
       ) : (
-        <button onClick={handleCreate}>Create new product</button>
+        <button className="admin-create-button" onClick={handleCreate}>Create new product</button>
       )}
-      <h2>Manage Products</h2>
-      <section id="product-list" className="products-wrapper">
+      <section id="product-list" className="wrapper">
         {products.map((p) => (
           <article
             key={p.id}
@@ -51,15 +55,15 @@ export const Products = () => {
                 setUpdateProductId={setUpdateProductId}
               />
             ) : (
-              <section className="product-card">
-                <p>Name: {p.name}</p>
-                <p>Description: {p.description}</p>
-                <p>Price: {p.price} SEK</p>
-                <p>Stock: {p.stock}</p>
-                <p>Category: {p.category}</p>
-                <p>Created At: {p.created_at}</p>
+              <section className="card">
+                <p><span>Name:</span> <span>{p.name}</span></p>
+                <p className="two-lines"><span>Description:</span> <span>{p.description}</span></p>
+                <p><span>Price:</span> <span>{p.price} SEK</span></p>
+                <p><span>Stock:</span> <span>{p.stock}</span></p>
+                <p><span>Category:</span> <span>{p.category}</span></p>
+                <p className="two-lines"><span>Created At:</span> <span>{p.created_at}</span></p>
                 <div />
-                <div className="button-wrapper">
+                <div className="button-wrapper-product">
                   <button onClick={() => handleDelete(p.id)}>
                     Delete
                   </button>
@@ -72,6 +76,6 @@ export const Products = () => {
           </article>
         ))}
       </section>
-    </div>
+    </>
   );
 };
