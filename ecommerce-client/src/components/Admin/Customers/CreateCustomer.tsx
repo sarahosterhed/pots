@@ -46,7 +46,7 @@ export const CreateCustomer = () => {
     return (
         <>
             {!showCreateCustomer
-                ? <button onClick={() => { setShowCreateCustomer(true) }}>Create Customer</button>
+                ? <button className="admin-create-button" onClick={() => { setShowCreateCustomer(true) }}>Create Customer</button>
                 : (
                     <>
                         <h2>Create Customer</h2>

@@ -1,9 +1,12 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react"
 import { Customer } from "../../types/Customer";
 import { useCustomers } from "../../hooks/useCustomers";
 import { useOrders } from "../../hooks/useOrders";
 import { getFromLocalStorage, saveTolocalStorage } from "../../utils/localStorageUtils";
 import { useCheckout } from "../../hooks/useCheckout";
+import CheckoutContext from "../../contexts/CheckoutContext";
+import { CheckoutActionType } from "../../reducers/CheckoutReducer";
+import { getClientSecret } from "../../services/checkoutService";
 
 export const CustomerForm = () => {
     const storedCustomerInput = getFromLocalStorage('customerInput');
@@ -20,21 +23,18 @@ export const CustomerForm = () => {
         country: "",
         created_at: ""
     });
-    const { fetchCustomerByEmailHandler, createCustomerHandler } = useCustomers();
-    const { createOrderHandler, prepareOrderHandler, updateOrderHandler } = useOrders();
-    const { createCheckoutHandler, prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
+    const { fetchCustomerByEmailHandler, createCustomerHandler, error } = useCustomers();
+    const { checkoutDispatch } = useContext(CheckoutContext)
+    const { createOrderHandler, prepareOrderHandler } = useOrders();
+    const { prepareCheckoutPayloadHandler, checkoutCleanupHandler } = useCheckout();
 
     useEffect(() => {
         saveTolocalStorage("customerInput", customerInput);
     }, [customerInput]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { type, name, value } = e.target;
-        if (type !== "tel") {
-            setCustomerInput({ ...customerInput, [name]: value })
-        } else {
-            setCustomerInput({ ...customerInput, [name]: +value })
-        }
+        const { name, value } = e.target;
+        setCustomerInput({ ...customerInput, [name]: value });
     }
 
     const handleSubmit = async (e: FormEvent) => {
@@ -44,25 +44,28 @@ export const CustomerForm = () => {
             let customer = await fetchCustomerByEmailHandler(customerInput.email);
             if (!customer) {
                 customer = await createCustomerHandler(customerInput);
+                if (!customer) return;
+            }
+
+            if (!customer) {
+                console.error("Customer creation failed due to validation errors.");
+                return;
             }
 
             const { id } = customer;
             const newOrder = prepareOrderHandler(id);
             const orderResponse = await createOrderHandler(newOrder);
             const orderId: number = orderResponse.id;
+            const checkoutPayload = prepareCheckoutPayloadHandler(orderId, newOrder);
+            const clientSecret = await getClientSecret(checkoutPayload);
 
-            const checkoutPayload = prepareCheckoutPayloadHandler(newOrder);
-            const { checkoutUrl, sessionId } = await createCheckoutHandler(checkoutPayload);
+            saveTolocalStorage("orderId", orderId);
+            saveTolocalStorage("clientSecret", clientSecret);
 
-            saveTolocalStorage("paymentId", sessionId)
-            window.location.href = checkoutUrl;
-
-            await updateOrderHandler(orderId, {
-                "payment_status": "paid",
-                "payment_id": sessionId,
-                "order_status": "Recieved"
+            checkoutDispatch({
+                type: CheckoutActionType.CHANGE_STAGE,
+                payload: 2
             });
-
             checkoutCleanupHandler();
 
         } catch (error) {
@@ -72,7 +75,8 @@ export const CustomerForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="customer-form">
+            <h2>Input Contact Details</h2>
             <input type="text" name="firstname" placeholder="First Name" onChange={(e) => handleChange(e)} value={customerInput.firstname} />
             <input type="text" name="lastname" placeholder="Last Name" onChange={(e) => handleChange(e)} value={customerInput.lastname} />
             <input type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} value={customerInput.email} />
@@ -83,7 +87,10 @@ export const CustomerForm = () => {
             <input type="text" name="city" placeholder="City" onChange={(e) => handleChange(e)} value={customerInput.city} />
             <input type="text" name="country" placeholder="Country" onChange={(e) => handleChange(e)} value={customerInput.country} />
 
-            <button type="submit">Go to payment</button>
+            {error && <p className="error-message">{error}</p>}
+
+
+            <button className="submit-button" type="submit">Go to payment</button>
         </form>
     )
 }

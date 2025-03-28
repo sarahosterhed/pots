@@ -4,6 +4,7 @@ import { CartItem } from "../types/CartItem";
 import CartContext from "../contexts/CartContext";
 import { Product } from "../types/Product";
 import { useNavigate } from "react-router";
+import "../styles/pages/Cart.css"
 
 export const Cart = () => {
   const { cart, cartDispatch } = useContext(CartContext);
@@ -34,21 +35,12 @@ export const Cart = () => {
 
 
   return (
-    <div>
+    <div className="cart-page">
       <h2>Cart</h2>
       {cart.map((cartItem: CartItem) => (
         <div key={cartItem.product.id} className="cart-wrapper">
-          <h3>{cartItem.product.name}</h3>
+          <p className="product-name">{cartItem.product.name}</p>
           <div className="cart-item">
-            <button
-              onClick={() =>
-                cartItem.product.id !== null &&
-                handleChangeQuantity(cartItem.product, 1)
-              }
-            >
-              +
-            </button>
-            <p>x {cartItem.quantity}</p>
             <button
               onClick={() =>
                 cartItem.product.id !== null &&
@@ -57,12 +49,21 @@ export const Cart = () => {
             >
               -
             </button>
-            <p>{cartItem.product.price} sek</p>
+            <p>x {cartItem.quantity}</p>
+            <button
+              onClick={() =>
+                cartItem.product.id !== null &&
+                handleChangeQuantity(cartItem.product, 1)
+              }
+            >
+              +
+            </button>
+            <p>{cartItem.product.price} kr</p>
             <button
               onClick={() =>
                 handleRemoveFromCart(cartItem.product)
               }
-              className="bg-red-700 text-white"
+              className="remove-button"
             >
               Remove
             </button>
@@ -70,11 +71,11 @@ export const Cart = () => {
         </div>
       ))}
       <div className="cart-wrapper">
-        <h3>Bag total</h3>
-        {totalSum === 0 ? <p>Your bag is empty</p> : <h3>Total: {totalSum} kr</h3>}
+        <h4>Bag total</h4>
+        {totalSum === 0 ? <p>Your bag is empty</p> : <h4>{totalSum} kr</h4>}
 
       </div>
-      <button onClick={handleResetCart}>Reset Cart</button>
+      <button className="reset-button" onClick={handleResetCart}>Reset Cart</button>
       <div>
         <button onClick={() => navigate("/checkout")}>Proceed to Checkout</button>
       </div>

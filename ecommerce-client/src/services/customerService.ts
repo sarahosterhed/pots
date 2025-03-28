@@ -30,7 +30,7 @@ export const fetchCustomerByEmail = async (email: string): Promise<Customer | nu
     } catch (error) {
         switch (error.status) {
             case 404:
-                console.log("error 404, do nothing");
+                console.log("Email does not exist");
                 return null;
             default:
                 console.log("other error than 404")

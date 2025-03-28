@@ -21,18 +21,15 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
         (cartItem) => cartItem.product.id == payload.product.id
       );
 
-      console.log("cart", cart);
-
       if (!cartItemExists) {
-        console.log("cartItemExists", cartItemExists);
         return [...cart, payload];
       } else {
         return cart.map((cartItem) =>
           cartItem.product.id === payload.product.id
             ? {
-                ...cartItem,
-                quantity: cartItem.quantity + (payload.quantity || 1),
-              }
+              ...cartItem,
+              quantity: cartItem.quantity + (payload.quantity || 1),
+            }
             : cartItem
         );
       }
@@ -57,7 +54,6 @@ export const CartReducer = (cart: CartItem[], action: ICartAction) => {
     }
 
     case cartActionType.REMOVE_ITEM: {
-      console.log("cart- REMOVE", cart)
       return cart.filter(
         (cartItem) => cartItem.product.id !== payload.id
       );
