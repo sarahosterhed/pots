@@ -75,7 +75,8 @@ export const CustomerForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="customer-form">
+            <h2>Input Contact Details</h2>
             <input type="text" name="firstname" placeholder="First Name" onChange={(e) => handleChange(e)} value={customerInput.firstname} />
             <input type="text" name="lastname" placeholder="Last Name" onChange={(e) => handleChange(e)} value={customerInput.lastname} />
             <input type="email" name="email" placeholder="Email" onChange={(e) => handleChange(e)} value={customerInput.email} />
@@ -86,10 +87,10 @@ export const CustomerForm = () => {
             <input type="text" name="city" placeholder="City" onChange={(e) => handleChange(e)} value={customerInput.city} />
             <input type="text" name="country" placeholder="Country" onChange={(e) => handleChange(e)} value={customerInput.country} />
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
 
-            <button type="submit">Go to payment</button>
+            <button className="submit-button" type="submit">Go to payment</button>
         </form>
     )
 }

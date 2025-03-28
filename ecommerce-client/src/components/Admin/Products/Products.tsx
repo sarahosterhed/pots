@@ -33,10 +33,12 @@ export const Products = () => {
 
   return (
     <>
-      {isLoading &&
-        <BeatLoader />
-      }
       <h2>Manage Products</h2>
+      {isLoading &&
+        <div className="center-content">
+          <BeatLoader color="white" />
+        </div>
+      }
       {openCreate ? (
         <CreateProduct handleClose={() => setOpenCreate(false)} />
       ) : (

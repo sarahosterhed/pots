@@ -4,6 +4,7 @@ import CheckoutContext from "../contexts/CheckoutContext"
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { getFromLocalStorage } from "../utils/localStorageUtils"
+import "../styles/pages/CheckoutPage.css"
 
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
@@ -14,7 +15,7 @@ export const CheckoutPage = () => {
     const clientSecret = getFromLocalStorage("clientSecret")
 
     return (
-        <div>
+        <div className="checkout-page">
             <section>
                 {checkoutStage === 1 &&
                     <CustomerForm />

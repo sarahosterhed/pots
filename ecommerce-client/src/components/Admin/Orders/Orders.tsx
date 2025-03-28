@@ -26,7 +26,9 @@ export const Orders = () => {
     <>
       <h2>Manage Orders</h2>
       {isLoading &&
-        <BeatLoader />
+        <div className="center-content">
+          <BeatLoader color="white" />
+        </div>
       }
       <section className="wrapper">
         {orders.map((order) => (

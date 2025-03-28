@@ -22,18 +22,18 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
 
   return (
     <section className="product-card">
-      <div>
+      <div className="content">
         <Link to={`/product/${id}`}>
           <h2>{name}</h2>
           <img className="product-image" src={image} alt={name} />
         </Link>
         <p>{description}</p>
-        <p>
-          <b>{category}</b>
-        </p>
+        <div className="category">
+          <p>{category}</p>
+        </div>
         <div>
-          <p>{price}</p>
-          <p>{stock}</p>
+          <p><span>Price:</span> <span>{price} kr</span></p>
+          <p><span>In stock:</span> <span>{stock}</span></p>
         </div>
       </div>
       <button

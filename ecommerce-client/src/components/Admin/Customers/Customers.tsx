@@ -37,7 +37,9 @@ export const Customers = () => {
             <h2>Manage Customers</h2>
             <CreateCustomer />
             {isLoading &&
-                <BeatLoader />
+                <div className="center-content">
+                    <BeatLoader color="white" />
+                </div>
             }
             <section className="wrapper">
                 {customers.map(({ id, firstname, lastname, email, password, phone, street_address, postal_code, city, country, created_at }) => (
