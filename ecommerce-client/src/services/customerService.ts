@@ -1,6 +1,6 @@
 import { Customer, CustomerCreate } from "../types/Customer";
 import axios from "axios";
-const CUSTOMER_URL = "https://knodd.vercel.app/customers/";
+const CUSTOMER_URL = "https://knodd-api.vercel.app/customers/";
 
 
 export const fetchCustomers = async (): Promise<Customer[]> => {
