@@ -1,6 +1,6 @@
 import { Customer, CustomerCreate } from "../types/Customer";
 import axios from "axios";
-const CUSTOMER_URL = "https://knodd-2l1j33ljg-sarahs-projects-a65c68a0.vercel.app/customers/";
+const CUSTOMER_URL = "http://localhost:3000/customers/";
 
 
 export const fetchCustomers = async (): Promise<Customer[]> => {
@@ -27,7 +27,7 @@ export const fetchCustomerByEmail = async (email: string): Promise<Customer | nu
     try {
         const response = await axios.get(CUSTOMER_URL + "email/" + email)
         return response.data;
-    } catch (error: any) {
+    } catch (error) {
         switch (error.status) {
             case 404:
                 console.log("Email does not exist");
