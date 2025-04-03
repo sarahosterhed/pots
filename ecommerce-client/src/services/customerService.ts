@@ -27,7 +27,7 @@ export const fetchCustomerByEmail = async (email: string): Promise<Customer | nu
     try {
         const response = await axios.get(CUSTOMER_URL + "email/" + email)
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         switch (error.status) {
             case 404:
                 console.log("Email does not exist");
