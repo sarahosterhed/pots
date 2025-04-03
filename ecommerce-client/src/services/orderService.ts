@@ -16,11 +16,6 @@ export const fetchOrders = async (): Promise<Order[]> => {
 };
 
 export const fetchOrderById = async (id: number): Promise<void | OrderDetails> => {
-  if (!id) {
-    console.error("Order ID is missing");
-    return;
-  }
-
   try {
     const response = await axios.get(`${ORDER_URL}/${id}`);
     return response.data;
