@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Product, ProductCreate } from "../types/Product";
 
-const PRODUCT_URL = "http://localhost:3000/products";
+const PRODUCT_URL = "https://knodd-2l1j33ljg-sarahs-projects-a65c68a0.vercel.app/products";
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
