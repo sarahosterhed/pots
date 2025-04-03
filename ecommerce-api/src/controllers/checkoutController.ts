@@ -15,7 +15,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
         mode: 'payment',
         ui_mode: 'embedded',
         client_reference_id: clientReferenceId,
-        return_url: 'http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}'
+        return_url: 'https://knodd-api.vercel.app/order-confirmation?session_id={CHECKOUT_SESSION_ID}'
     });
 
     res.send({ clientSecret: session.client_secret });
