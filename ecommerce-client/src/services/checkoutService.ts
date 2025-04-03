@@ -1,6 +1,6 @@
 import { CheckoutPayload } from "../types/Checkout";
-
-const CHECKOUT_URL = "http://localhost:3000/stripe/"
+const CHECKOUT_URL = "https://knodd.vercel.app/stripe/";
+// const CHECKOUT_URL = "http://localhost:3000/stripe/";
 
 export const getClientSecret = async ({ orderId, lineItems }: CheckoutPayload) => {
   try {

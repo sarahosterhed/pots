@@ -1,6 +1,6 @@
 import { Customer, CustomerCreate } from "../types/Customer";
 import axios from "axios";
-const CUSTOMER_URL = "http://localhost:3000/customers/";
+const CUSTOMER_URL = "https://knodd.vercel.app/customers/";
 
 
 export const fetchCustomers = async (): Promise<Customer[]> => {
@@ -27,7 +27,7 @@ export const fetchCustomerByEmail = async (email: string): Promise<Customer | nu
     try {
         const response = await axios.get(CUSTOMER_URL + "email/" + email)
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         switch (error.status) {
             case 404:
                 console.log("Email does not exist");
