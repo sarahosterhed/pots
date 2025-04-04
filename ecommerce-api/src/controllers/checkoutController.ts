@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { ICheckoutLineItem } from "../models/ICheckout";
 import { ResultSetHeader } from "mysql2";
 import { db } from "../config/db";
 import { IOrderItem } from "../models/IOrderItem";
+import { ICheckoutLineItem } from "../models/ICheckout";
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
