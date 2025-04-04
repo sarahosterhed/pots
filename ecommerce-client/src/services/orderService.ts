@@ -36,7 +36,7 @@ export const fetchOrderByPaymentId = async (paymentId: string): Promise<OrderDet
 
 }
 
-export const deleteOrder = async (id: number): Promise<void> => {
+export const deleteOrder = async (id: number) => {
   try {
     await axios.delete(`${ORDER_URL}/${id}`);
   } catch (error) {
