@@ -15,7 +15,7 @@ export const fetchOrders = async (): Promise<Order[]> => {
   }
 };
 
-export const fetchOrderById = async (id: number): Promise<void | OrderDetails> => {
+export const fetchOrderById = async (id: number) => {
   try {
     const response = await axios.get(`${ORDER_URL}/${id}`);
     return response.data;
