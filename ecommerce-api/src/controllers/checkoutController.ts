@@ -58,11 +58,11 @@ export const updateOrderAndStock = async (req: Request, res: Response) => {
                         WHERE id = ?
                     `
 
-                    const [stockResult] = await db.query(productStockSql, [item.product_id]
+                    const stockResult = await db.query(productStockSql, [item.product_id]
                     );
                     console.log("stock result", stockResult)
 
-                    if (stockResult[0].stock < item.quantity) {
+                    if (stockResult.stock < item.quantity) {
                         console.log(`Not enough products in stock, ${item.quantity} of ${item.product_id} remains`);
                         throw new Error(`Not enough products in stock, ${item.quantity} of ${item.product_id} remains`);
                     }
