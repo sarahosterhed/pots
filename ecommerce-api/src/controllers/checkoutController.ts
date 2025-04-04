@@ -33,10 +33,11 @@ export const updateOrderAndStock = async (req: Request, res: Response) => {
 
                 const updateOrderSql = `
                     UPDATE orders
-                    SET payment_status = "Paid", payment_id = ?, order_status = "Recieved"
+                    SET payment_status = ?, payment_id = ?, order_status = "Recieved"
                     WHERE id = ?
                 `;
                 const orderParams = [
+                    "Paid",
                     session.id,
                     session.client_reference_id,
                 ];
@@ -60,6 +61,7 @@ export const updateOrderAndStock = async (req: Request, res: Response) => {
 
                     const [stockResult] = await db.query(productStockSql, [item.product_id]
                     );
+                    console.log("stock result", stockResult)
 
                     if (stockResult[0].stock < item.quantity) {
                         console.log(`Not enough products in stock, ${item.quantity} of ${item.product_id} remains`);
