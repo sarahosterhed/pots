@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ResultSetHeader } from "mysql2";
+import { FieldPacket, ResultSetHeader, RowDataPacket } from "mysql2";
 import { db } from "../config/db";
 import { IOrderItem } from "../models/IOrderItem";
 import { ICheckoutLineItem } from "../models/ICheckout";
@@ -58,11 +58,10 @@ export const updateOrderAndStock = async (req: Request, res: Response) => {
                         WHERE id = ?
                     `
 
-                    const stockResult = await db.query(productStockSql, [item.product_id]
+                    const [stockResult]: [RowDataPacket[], FieldPacket[]] = await db.query(productStockSql, [item.product_id]
                     );
-                    console.log("stock result", stockResult)
 
-                    if (stockResult.stock < item.quantity) {
+                    if (stockResult[0].stock < item.quantity) {
                         console.log(`Not enough products in stock, ${item.quantity} of ${item.product_id} remains`);
                         throw new Error(`Not enough products in stock, ${item.quantity} of ${item.product_id} remains`);
                     }
