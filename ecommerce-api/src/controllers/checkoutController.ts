@@ -33,11 +33,10 @@ export const updateOrderAndStock = async (req: Request, res: Response) => {
 
                 const updateOrderSql = `
                     UPDATE orders
-                    SET payment_status = ?, payment_id = ?, order_status = "Recieved"
+                    SET payment_status = 'Paid', payment_id = ?, order_status = 'Recieved'
                     WHERE id = ?
                 `;
                 const orderParams = [
-                    "Paid",
                     session.id,
                     session.client_reference_id,
                 ];
