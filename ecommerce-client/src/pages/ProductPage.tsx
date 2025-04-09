@@ -1,4 +1,4 @@
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router"
 import { useContext } from "react";
 import ProductContext from "../contexts/ProductContext";
@@ -28,10 +28,10 @@ export const ProductPage = () => {
 
     return (
         <>
-            <HelmetProvider>
+            <Helmet>
                 <title>{product.name} | Knodd</title>
                 <meta name="description" content={product.description} />
-            </HelmetProvider>
+            </Helmet>
             <article>
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>

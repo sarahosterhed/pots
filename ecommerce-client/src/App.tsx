@@ -3,15 +3,18 @@ import "./App.css";
 import { router } from "./Router";
 import { ProductProvider } from "./contexts/ProductContext";
 import { CartProvider } from "./contexts/CartContext";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
     <>
-      <ProductProvider>
-        <CartProvider>
-          <RouterProvider router={router}></RouterProvider>
-        </CartProvider>
-      </ProductProvider>
+      <HelmetProvider>
+        <ProductProvider>
+          <CartProvider>
+            <RouterProvider router={router}></RouterProvider>
+          </CartProvider>
+        </ProductProvider>
+      </HelmetProvider>
     </>
   );
 }
