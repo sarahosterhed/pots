@@ -25,6 +25,8 @@ export const SearchBar = () => {
                 throw new Error('No search results')
             }
             setItems(response.data.items)
+            console.log(items)
+            console.log(error)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 console.log(error.message)
