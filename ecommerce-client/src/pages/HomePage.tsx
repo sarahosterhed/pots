@@ -3,7 +3,7 @@ import { DisplayProducts } from "../components/Start/DisplayProducts"
 import "../styles/pages/HomePage.css"
 import { IndexedItem } from "../types/IndexedItem"
 import { SearchBar } from "../components/Start/SearchBar"
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet-async";
 
 export const HomePage = () => {
     const [filteredProducts, setFilteredProducts] = useState<IndexedItem[]>([]);
