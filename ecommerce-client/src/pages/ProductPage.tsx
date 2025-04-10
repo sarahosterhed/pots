@@ -31,6 +31,11 @@ export const ProductPage = () => {
             <Helmet>
                 <title>{product.name} | Knodd</title>
                 <meta name="description" content={product.description} />
+                <meta property="og:title" content={`${product.name} | Knodd`} />
+                <meta property="og:description" content={product.description} />
+                <meta property="og:image" content={product.image} />
+                <meta property="og:url" content={`https://knodd.vercel.app/product/${product.id}`} />
+                <meta property="og:type" content="product" />
             </Helmet>
             <article>
                 <h2>{product.name}</h2>
