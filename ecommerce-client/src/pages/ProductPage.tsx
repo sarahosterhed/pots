@@ -29,12 +29,12 @@ export const ProductPage = () => {
     return (
         <>
             <Helmet>
-                <title>{product.name} | Knodd</title>
+                <title>{product.name} | Pots</title>
                 <meta name="description" content={product.description} />
-                <meta property="og:title" content={`${product.name} | Knodd`} />
+                <meta property="og:title" content={`${product.name} | Pots`} />
                 <meta property="og:description" content={product.description} />
                 <meta property="og:image" content={product.image} />
-                <meta property="og:url" content={`https://knodd.vercel.app/product/${product.id}`} />
+                <meta property="og:url" content={`https://plantpots.vercel.app/product/${product.id}`} />
                 <meta property="og:type" content="product" />
             </Helmet>
             <article>

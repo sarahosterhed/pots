@@ -2,8 +2,8 @@ import axios from "axios";
 import { Order, OrderCreate, OrderDetails, OrderUpdate } from "../types/Order";
 import { OrderItemUpdate } from "../types/Order";
 
-const ORDER_URL = "https://knodd-api.vercel.app/orders";
-const ORDERITEMS_URL = "https://knodd-api.vercel.app/order-items";
+const ORDER_URL = "https://pots-api.vercel.app/orders";
+const ORDERITEMS_URL = "https://pots-api.vercel.app/order-items";
 
 export const fetchOrders = async (): Promise<Order[]> => {
   try {

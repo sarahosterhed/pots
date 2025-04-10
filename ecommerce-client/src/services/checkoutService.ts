@@ -1,5 +1,5 @@
 import { CheckoutPayload } from "../types/Checkout";
-const CHECKOUT_URL = "https://knodd-api.vercel.app/stripe/";
+const CHECKOUT_URL = "https://pots-api.vercel.app/stripe/";
 
 export const getClientSecret = async ({ orderId, lineItems }: CheckoutPayload) => {
   try {

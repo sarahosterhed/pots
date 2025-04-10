@@ -3,4 +3,4 @@ Disallow: /admin
 Disallow: /checkout
 Disallow: /order-confirmation
 
-Sitemap: https://knodd.vercel.app/sitemap.xml
+Sitemap: https://plantpots.vercel.app/sitemap.xml
