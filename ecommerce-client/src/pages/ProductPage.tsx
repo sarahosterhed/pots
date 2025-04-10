@@ -33,14 +33,14 @@ export const ProductPage = () => {
                 <meta name="description" content={product.description} />
                 <meta property="og:title" content={`${product.name} | Pots`} />
                 <meta property="og:description" content={product.description} />
-                <meta property="og:image" content={product.image} />
+                <meta property="og:image" content={`/images/${product.image}`} />
                 <meta property="og:url" content={`https://plantpots.vercel.app/product/${product.id}`} />
                 <meta property="og:type" content="product" />
             </Helmet>
             <article>
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>
-                <img src={product.image} alt={product.name} width="400" />
+                <img src={`/images/${product.image}`} alt={product.name} width="400" />
                 <p><b>{product.category}</b></p>
                 <p>{product.stock} items left</p>
                 <h2>{product.price} kr</h2>
