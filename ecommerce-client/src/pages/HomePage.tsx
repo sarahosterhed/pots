@@ -9,6 +9,7 @@ export const HomePage = () => {
 
     return (
         <>
+            {/* <CategorySection /> */}
             <SearchBar setFilteredProducts={setFilteredProducts} />
             <DisplayProducts filteredProducts={filteredProducts} />
         </>

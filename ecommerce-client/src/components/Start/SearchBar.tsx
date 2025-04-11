@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react"
 import { IndexedItem } from "../../types/IndexedItem";
+import "../../styles/SearchBar.css"
 
 type SearchBarProps = {
     setFilteredProducts: (items: IndexedItem[]) => void;
@@ -47,13 +48,13 @@ export const SearchBar = ({ setFilteredProducts }: SearchBarProps) => {
 
 
     return (
-        <>
+        <section className="search-bar">
             <input
                 type="search"
-                placeholder="search products"
+                placeholder="Search products"
                 onChange={(e) => setSearchText(e.target.value)} />
             <button onClick={handleSearch}>Search</button>
             {error && <p>{error}</p>}
-        </>
+        </section>
     )
 }
