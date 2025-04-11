@@ -21,6 +21,8 @@ export const DisplayProducts = ({ filteredProducts }: DisplayProductsProps) => {
     }).filter((product) => ((product) !== null))
     : products;
 
+
+  console.log("productsToDisplay", productsToDisplay);
   return (
     <>
       <section className="products-wrapper">

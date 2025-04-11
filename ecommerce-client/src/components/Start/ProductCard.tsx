@@ -19,7 +19,6 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
       payload: { product, quantity },
     });
   };
-
   return (
     <section className="product-card">
       <div className="content">

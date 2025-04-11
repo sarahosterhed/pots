@@ -8,7 +8,7 @@ export type IndexedItem = {
     link: string;
     snippet: string,
     pagemap: {
-        cse_thumbnail?: IndexedItemThumbnail[]
+        cse_image?: IndexedItemThumbnail[]
     };
     title: string;
 }
