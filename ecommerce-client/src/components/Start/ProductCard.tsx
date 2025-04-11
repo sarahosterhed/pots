@@ -13,7 +13,6 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
   const { cartDispatch } = useContext(CartContext);
 
   const handleAddToCart = (product: Product, quantity: number) => {
-    console.log("payload = product:", product, "quantity:", quantity);
     cartDispatch({
       type: cartActionType.ADD_ITEM,
       payload: { product, quantity },
