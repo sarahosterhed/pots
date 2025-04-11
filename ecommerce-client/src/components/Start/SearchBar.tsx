@@ -33,7 +33,7 @@ export const SearchBar = ({ setFilteredProducts }: SearchBarProps) => {
                 throw new Error('No search results')
             }
 
-            const filteredProducts = response.data.items((item: IndexedItem) => (
+            const filteredProducts = response.data.items.filter((item: IndexedItem) => (
                 item.title.toLowerCase().includes(value.toLowerCase())
             ))
 
