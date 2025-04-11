@@ -1,12 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Autour+One&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Combo&family=Dosis:wght@200..800&display=swap');
+@import url(styles/variables.css);
 :root {
-  font-family: Kanit, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 200;
+  font-family: Dosis, sans-serif;
+  font-weight: 300;
 
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--rock);
+  background-color: var(--greige);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,44 +13,82 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+
 body {
   margin: 0;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+main {
+  max-width: 1600px;
+  /* margin: 0 auto; */
+  flex: 1;
+  padding: 0 6rem;
 }
+
 a {
-  color: #56376b;
+  font-family: Combo, sans-serif;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+
+h1, h2, h3 {
+  font-family: Combo, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 4.5rem;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--redwood);
 }
 
+h2 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: var(--honey);
+}
+
+h3 {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+p {
+  margin: 0;
+  letter-spacing: 0.25px;
+  font-size: 1rem;
+}
+
+
 button {
-  border-radius: 4px;
-  border: 1px solid transparent;
+  border-radius: 2px;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #56376b;
+  text-transform: uppercase;
+  background-color: var(--redwood);
   color: white;
   cursor: pointer;
-  transition: background-color 0.25s;
+  transition: all ease 0.25s;
 }
 button:hover {
-  background-color: #7a5c8e;
+  transform: scale(1.025);
 }
-button:focus,
+/* button:focus,
 button:focus-visible {
   outline: 4px auto #4dc2a1;
-}
+} */
 
-main {
-  flex: 1;
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 3.5rem;
+  }
 }

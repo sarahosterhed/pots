@@ -3,9 +3,15 @@ import { Link, useParams } from "react-router"
 import { useContext } from "react";
 import ProductContext from "../contexts/ProductContext";
 import { BeatLoader } from "react-spinners";
+import "../styles/pages/ProductPage.css"
+import { cartActionType } from "../reducers/CartReducer";
+import { Product } from "../types/Product";
+import CartContext from "../contexts/CartContext";
+import addToCartIcon from "../assets/icons/add-to-cart-button.svg"
 
 export const ProductPage = () => {
     const { id } = useParams();
+    const { cartDispatch } = useContext(CartContext);
     const { products } = useContext(ProductContext);
     const product = products.find((product) => product.id === Number(id));
 
@@ -26,8 +32,15 @@ export const ProductPage = () => {
         )
     }
 
+    const handleAddToCart = (product: Product, quantity: number) => {
+        cartDispatch({
+            type: cartActionType.ADD_ITEM,
+            payload: { product, quantity },
+        });
+    };
+
     return (
-        <>
+        <section className="product-page">
             <Helmet>
                 <title>{product.name} | Pots</title>
                 <meta name="description" content={product.description} />
@@ -37,15 +50,24 @@ export const ProductPage = () => {
                 <meta property="og:url" content={`https://plantpots.vercel.app/product/${product.id}`} />
                 <meta property="og:type" content="product" />
             </Helmet>
-            <article>
-                <h2>{product.name}</h2>
-                <p>{product.description}</p>
-                <img src={`/images/${product.image}`} alt={product.name} width="400" />
-                <p><b>{product.category}</b></p>
-                <p>{product.stock} items left</p>
-                <h2>{product.price} kr</h2>
-            </article>
             <Link to={"/"}><button>Back</button></Link>
-        </>
+            <article>
+                <img src={`/images/${product.image}`} alt={product.name} width="400" />
+                <div className="product-page-details">
+                    <h2>{product.name}</h2>
+                    <p>{product.description}</p>
+                    <p><b>{product.category}</b></p>
+                    <p>{product.stock} items left</p>
+                    <h4>{product.price} kr</h4>
+                    <button
+                        className="add-to-cart-button"
+                        onClick={() => handleAddToCart(product, 1)}
+                    >
+                        <img src={addToCartIcon} alt="Add to cart" />
+                        Add to Cart
+                    </button>
+                </div>
+            </article>
+        </section>
     )
 }

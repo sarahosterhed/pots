@@ -1,8 +1,13 @@
 
 nav {
-    padding: 1rem 2rem;
-    border-bottom: solid white 1px;
+    height: 82px;
+    padding: 0 2rem;
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     ul {
+      width: 100%;
       margin: 0;
       display: flex;
       gap: 3rem;
@@ -13,32 +18,58 @@ nav {
       .nav-links {
         display: flex;
         gap: 3rem;
+        align-items: center;
       }
   
       li {
         list-style: none;
         a {
-          color: white;
+          display: flex;
+          align-items: center;
+          color: var(--rock);
+          font-size: 1.25rem;
           transition: all 0.2s;
         }
+        a:hover {
+          transform: translateY(-2px);
+          color: var(--redwood);
+        }
+        /* a:active {
+          color: var(--redwood);
+          text-decoration: wavy;
+        } */
+        .logo {
+          height: 58px;
+        }
       }
+
     }
   }
 
   .cart-icon {
     width: 32px;
     height: 32px;
-    color: white;
+    color: var(--rock);
   }
   
+  .cart-button {
+    position: relative;
+    background: none;
+    cursor: pointer;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
   .cart-quantity {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    background: red;
+    top: 6px;
+    right: 0;
+    background: var(--sage);
     color: white;
-    font-size: 12px;
-    font-weight: bold;
+    font-family: Dosis;
+    font-size: 0.75rem;
+    font-weight: 600;
     border-radius: 50%;
     width: 18px;
     height: 18px;
@@ -47,8 +78,32 @@ nav {
     justify-content: center;
   }
   
-  .cart-button {
-    position: relative;
-    background: none;
-    cursor: pointer;
+
+  @media only screen and (max-width: 600px) {
+    nav {
+      height: 62px;
+      padding: 0 1rem;
+      ul {
+        gap: 1rem;
+        padding-left: 0;
+    
+        .nav-links {
+          display: flex;
+          gap: 1.2rem;
+          align-items: center;
+        }
+    
+        li {
+          a {
+            font-size: 1rem;
+          }
+          a:hover {
+            transform: none;
+          }
+          .logo {
+            height: 40px;
+          }
+        }
+      }
+    }
   }

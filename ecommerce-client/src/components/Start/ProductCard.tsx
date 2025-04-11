@@ -3,13 +3,14 @@ import { Product } from "../../types/Product";
 import { useContext } from "react";
 import { cartActionType } from "../../reducers/CartReducer";
 import CartContext from "../../contexts/CartContext";
+import addToCartIcon from "../../assets/icons/add-to-cart-button.svg";
 
 type ShowProductCardProps = {
   product: Product;
 };
 
 const ProductCard = ({ product }: ShowProductCardProps) => {
-  const { id, name, description, price, stock, category, image } = product;
+  const { id, name, description, price, image } = product;
   const { cartDispatch } = useContext(CartContext);
 
   const handleAddToCart = (product: Product, quantity: number) => {
@@ -19,28 +20,26 @@ const ProductCard = ({ product }: ShowProductCardProps) => {
     });
   };
   return (
-    <section className="product-card">
-      <div className="content">
+    <article className="product-card">
+      <div className="product-image-wrapper">
         <Link to={`/product/${id}`}>
-          <h2>{name}</h2>
-          <img className="product-image" src={`/images/${image}`} alt={name} />
+          <img src={`/images/${image}`} alt={name} />
         </Link>
+      </div>
+      <div className="product-card-details">
+        <h3>{name}</h3>
         <p>{description}</p>
-        <div className="category">
-          <p>{category}</p>
-        </div>
-        <div>
-          <p><span>Price:</span> <span>{price} kr</span></p>
-          <p><span>In stock:</span> <span>{stock}</span></p>
+        <div className="product-card-bottom">
+          <p className="product-price">{price} :-</p>
+          <button
+            className="add-to-cart-button"
+            onClick={() => handleAddToCart(product, 1)}
+          >
+            <img src={addToCartIcon} alt="Add to cart" />
+          </button>
         </div>
       </div>
-      <button
-        className="add-to-cart-button"
-        onClick={() => handleAddToCart(product, 1)}
-      >
-        Add to cart
-      </button>
-    </section>
+    </article>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import CartContext from "../contexts/CartContext";
 import "../styles/Navbar.css"
 
@@ -11,10 +11,18 @@ export const Navbar = () => {
         <ul>
           <div className="nav-links">
             <li>
-              <NavLink to={"/"}>Home</NavLink>
+              <Link to={"/"}>
+                <img className="logo" src={"../pots-logo.svg"} alt="Pots - logo" />
+              </Link>
+            </li>
+            <li>
+              <NavLink to={"/about"}>About</NavLink>
             </li>
             <li>
               <NavLink to={"/admin"}>Admin</NavLink>
+            </li>
+            <li>
+              <NavLink to={"/contact"}>Contact</NavLink>
             </li>
           </div>
           <li>
