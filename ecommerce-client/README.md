@@ -1,54 +1,31 @@
-# React + TypeScript + Vite
+# Pots — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live site:** [https://plantpots.vercel.app](https://plantpots.vercel.app)
 
-Currently, two official plugins are available:
+Pots is an e-commerce store for rare and trendy plants, built as a personal learning project. The focus was on building a fully functional shopping experience end-to-end — from browsing products to paying with Stripe — while developing skills in React, TypeScript, and frontend architecture.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This was a learning process, and I'm happy with how it turned out, especially the design of the start page.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Browse and search for plants
+- View detailed product pages
+- Add to cart from both list and detail views
+- Cart managed with React Context and Reducers
+- Checkout and pay securely with Stripe
+- Order confirmation page
+- Admin page for managing products, orders, and customers
+- Plant search powered by Google Custom Search API
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React** + **TypeScript** + **Vite**
+- **React Router** for navigation
+- **React Context & Reducers** for cart state
+- **Stripe** for payment processing
+- **Google Custom Search API** for plant search
+- **Vercel** for deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Backend
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+The frontend connects to a custom REST API built with Node.js, Express, and MySQL. See the `ecommerce-api` folder for the backend code.
