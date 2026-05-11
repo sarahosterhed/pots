@@ -1,28 +1,29 @@
-# 🪴 Pots 
+# Pots
 
-🌿 **Live site:** [https://plantpots.vercel.app](https://plantpots.vercel.app)
+**Live site:** [https://plantpots.vercel.app](https://plantpots.vercel.app)
 
-Welcome to **Pots**, an e-commerce site for rare and trendy plants. This project is built with React, TypeScript, and CSS, with a focus on clean design and a functional user experience. The design for some pages are currently in progress 🎨
+Pots is an e-commerce store for rare and trendy plants, built as a personal learning project. The goal was to build a fully functional shopping experience end-to-end — from browsing products to paying with Stripe. I'm particularly happy with how the design of the start page turned out.
 
-## ✨ Features
+## Frontend
 
-- 🛒 Browse plants
-- 🔎 Search for plants using Google Custom Search API  
-- 🧾 View detailed product information  
-- ⚙️ Product data loaded from an API  
-- ✏️ Administrate orders, products and customers on Admin page
-- 🛒 Add products to cart from both the product list and detail views  
-- 🔄 Cart updates dynamically with React Context  
-- 🧾 View cart summary with total price and quantities  
-- 💳 Checkout and pay securely using Stripe 
+Built from scratch with React and TypeScript.
 
+**Features:**
+- Browse and search for plants
+- View detailed product pages
+- Add to cart from both list and detail views
+- Cart managed with React Context and Reducers
+- Checkout and pay securely with Stripe
+- Order confirmation page
+- Admin page for managing products, orders, and customers
+- Plant search powered by Google Custom Search API
 
-## 💻 Tech Stack
+**Tech stack:** React, TypeScript, Vite, React Router, Vercel
 
-- **Frontend:** React + TypeScript + Vite 
-- **State Management**: React Context & Reducers
-- **Routing:** React Router  
-- **Backend/API**: Headless ecommerce API  
-- **Payment Integration**: Stripe  
-- **Search**: Google Custom Search API  
-- **Deployment**: Vercel 
+## Backend
+
+The REST API was provided as part of the project and I made adjustments to fit the needs of the frontend. It is built with Node.js, Express, and MySQL (hosted on Aiven).
+
+**Endpoints:** products, customers, orders, order items, Stripe checkout webhook
+
+**Tech stack:** Node.js, Express, TypeScript, MySQL, Stripe, Vercel
